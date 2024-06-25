@@ -1,11 +1,15 @@
-NAME	:= so_long
-CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
-LIBMLX	:= ./lib/MLX42
+NAME	= so_long
+CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code -Ofast
 
-HEADERS	:= -I ./include -I $(LIBMLX)/include
-LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
-SRCS	:= $(shell find ./src -iname "*.c")
-OBJS	:= ${SRCS:.c=.o}
+HEADERS	= -I ./include -I $(LIBMLX)/include -I $(LIBFT)
+
+LIBMLX	= ./lib/MLX42
+LIBFT = ./lib/libft
+
+LIBS	= $(LIBMLX)/build/libmlx42.a $(LIBFT)/libft.a -ldl -lglfw -pthread -lm
+
+SRCS	= $(shell find ./src -iname "*.c")
+OBJS	= ${SRCS:.c=.o}
 
 all: libmlx $(NAME)
 
@@ -16,14 +20,17 @@ libmlx:
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+	@$(MAKE) -C $(LIBFT)
+	@$(CC) $(OBJS) $(LIBFT)/libft.a $(LIBS) $(HEADERS) -o $(NAME)
 
 clean:
 	@rm -rf $(OBJS)
 	@rm -rf $(LIBMLX)/build
+	@$(MAKE) -C $(LIBFT) clean
 
 fclean: clean
 	@rm -rf $(NAME)
+	@$(MAKE) -C $(LIBFT) fclean
 
 re: clean all
 

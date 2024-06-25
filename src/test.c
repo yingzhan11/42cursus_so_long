@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "MLX42/MLX42.h"
+#include "libft.h"
 
 #define WIDTH 1024
 #define HEIGHT 512
@@ -53,7 +54,7 @@ void ft_hook(void* param)
 	if (mlx_is_key_down(mlx, MLX_KEY_D))
 		image->instances[0].x += 5;
 }
-
+/*
 void	*ft_memset(void *b, int c, size_t len)
 {
 	size_t		i;
@@ -68,19 +69,26 @@ void	ft_bzero(void *s, size_t n)
 {
 	ft_memset(s, 0, n);
 }
+*/
 // -----------------------------------------------------------------------------
 
 int32_t main(void)
 {
 	game_t game;
 
+	//initailize window
 	ft_bzero(&game, sizeof(game_t));
-	// Gotta error check this stuff
 	if (!(game.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 	{
 		puts(mlx_strerror(mlx_errno));
 		return(EXIT_FAILURE);
 	}
+	//read map file
+
+	//load map texture
+
+	//show map in window
+
 	mlx_texture_t* tex;
 	tex = mlx_load_png("./textures/Character_Hurt.png");
 /*
@@ -97,6 +105,7 @@ int32_t main(void)
 	int region_height = 16;
 	game.image = mlx_new_image(game.mlx, region_width, region_height);
 	copy_region_to_image(tex, game.image, src_x, src_y, region_width, region_height);
+	//mlx_delete_texture(tex);
 	mlx_resize_image(game.image, 64, 64);
 	if (mlx_image_to_window(game.mlx, game.image, 0, 0) == -1)
 	{
