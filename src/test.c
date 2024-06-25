@@ -1,15 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <fcntl.h>
 #include "MLX42/MLX42.h"
 #include "libft.h"
+#include "get_next_line/get_next_line.h"
 
 #define WIDTH 1024
 #define HEIGHT 512
-
-//static mlx_image_t* image;
-
-// -----------------------------------------------------------------------------
 
 typedef struct game
 {
@@ -46,31 +44,43 @@ void ft_hook(void* param)
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
 	if (mlx_is_key_down(mlx, MLX_KEY_W))
-		image->instances[0].y -= 5;
+		image->instances[0].y -= 32;
 	if (mlx_is_key_down(mlx, MLX_KEY_S))
-		image->instances[0].y += 5;
+		image->instances[0].y += 32;
 	if (mlx_is_key_down(mlx, MLX_KEY_A))
-		image->instances[0].x -= 5;
+		image->instances[0].x -= 32;
 	if (mlx_is_key_down(mlx, MLX_KEY_D))
-		image->instances[0].x += 5;
-}
-/*
-void	*ft_memset(void *b, int c, size_t len)
-{
-	size_t		i;
-
-	i = 0;
-	while (i < len)
-		((unsigned char *)b)[i++] = c;
-	return (b);
+		image->instances[0].x += 32;
 }
 
-void	ft_bzero(void *s, size_t n)
-{
-	ft_memset(s, 0, n);
+int** read_map(const char* filename, int* rows, int* cols) {
+    int fd = open(filename, O_RDONLY);
+    if (fd == -1) {
+        fprintf(stderr, "Failed to open map file\n");
+        return NULL;
+    }
+
+    char *line;
+    int** map = NULL;
+    *rows = 0;
+    *cols = 0;
+
+    while ((line = get_next_line(fd)) != NULL) {
+        if (*cols == 0) {
+            *cols = ft_strlen(line) - 1; // exclude newline character
+        }
+        map = realloc(map, (*rows + 1) * sizeof(int*));
+        map[*rows] = malloc(*cols * sizeof(int));
+        for (int i = 0; i < *cols; i++) {
+            map[*rows][i] = line[i] - '0';
+        }
+        (*rows)++;
+        free(line);
+    }
+
+    close(fd);
+    return map;
 }
-*/
-// -----------------------------------------------------------------------------
 
 int32_t main(void)
 {
@@ -84,20 +94,40 @@ int32_t main(void)
 		return(EXIT_FAILURE);
 	}
 	//read map file
+	int rows;
+	int cols;
+	int	**map = read_map("./map/map1.ber", &rows, &cols);
 
 	//load map texture
-
+	mlx_texture_t* wall_texture = mlx_load_png("./textures/Grass_Middle.png");
+	mlx_texture_t* space_texture = mlx_load_png("./textures/FarmLand_Tile.png");
+	
 	//show map in window
-
-	mlx_texture_t* tex;
-	tex = mlx_load_png("./textures/Character_Hurt.png");
-/*
-	if (!(image = mlx_texture_to_image(mlx, tex)))
+	int y = 0;
+	int x;
+	while (y < rows)
 	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}*/
+		x = 0;
+		while (x < cols)
+		{
+			mlx_image_t* img = NULL;
+			if (map[y][x] == 1)
+				img = mlx_texture_to_image(game.mlx, wall_texture);
+			else
+				img = mlx_texture_to_image(game.mlx, space_texture);
+			if (img)
+			{
+				int tile_size = WIDTH/10;
+				mlx_resize_image(img, tile_size, tile_size);
+				mlx_image_to_window(game.mlx, img, x * tile_size, y * tile_size);
+			}
+			x++;
+		}
+		y++;
+	}
+
+	//load character
+	mlx_texture_t* tex = mlx_load_png("./textures/Character_Hurt.png");
 
 	int src_x = 0;        // X coordinate of the region in the texture
 	int src_y = 0;        // Y coordinate of the region in the texture
@@ -106,13 +136,14 @@ int32_t main(void)
 	game.image = mlx_new_image(game.mlx, region_width, region_height);
 	copy_region_to_image(tex, game.image, src_x, src_y, region_width, region_height);
 	//mlx_delete_texture(tex);
-	mlx_resize_image(game.image, 64, 64);
+	mlx_resize_image(game.image, 16*4, 16*5);
+
 	if (mlx_image_to_window(game.mlx, game.image, 0, 0) == -1)
 	{
 		mlx_close_window(game.mlx);
 		puts(mlx_strerror(mlx_errno));
 		return(EXIT_FAILURE);
-	}	
+	}
 
 	mlx_loop_hook(game.mlx, ft_hook, &game);
 
