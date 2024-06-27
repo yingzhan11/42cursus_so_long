@@ -19,7 +19,6 @@ typedef struct s_image
 {
     int image_w;
     int image_h;
-    int size;
     mlx_image_t *empty;
     mlx_image_t *wall;
     mlx_image_t *collect;
@@ -30,6 +29,10 @@ typedef struct s_image
 
 typedef struct s_map
 {
+    //
+    mlx_t   *mlx;
+    t_image     *image;
+    //map file
     char    *filename;
     char     **grid; //map
     int     rows; //y
@@ -37,12 +40,21 @@ typedef struct s_map
     //mlx size
     int     window_w;
     int     window_h;
-    
-    //exit
+    //scale
+    int     scale;
+    //player moves
+    int     move;
+    //collection numbers
+    int     collect_all;
+    int     collect_get;
+    //exit coord
     t_coord     exit;
-    //start
+    //start coord
     t_coord     start;
-    
+    //player curret location
+    t_coord     cur;
+    //player next location
+    t_coord     next;
 }   t_map;
 
 
@@ -51,5 +63,8 @@ void map_initialize(t_map *map);
 void    error_info(char *message);
 void image_initialize(mlx_t *mlx, t_map *map, t_image *image);
 void image_draw(mlx_t *mlx, t_map *map, t_image *image);
+void my_keyhook(mlx_key_data_t keydata, void *param);
+void player_move(t_map *map, t_image *image);
+mlx_image_t *image_load(mlx_t *mlx, t_map *map, const char *path);
 
 #endif

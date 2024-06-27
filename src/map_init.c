@@ -52,7 +52,6 @@ void read_map(t_map *map)
     {
         if (map->cols == 0) 
             map->cols = ft_strlen(line) - 1; // exclude newline character
-        //map->grid[y] = malloc(map->cols * sizeof(char));
         map->grid[y] = ft_strtrim(line, "\n");
         y++;
         free(line);

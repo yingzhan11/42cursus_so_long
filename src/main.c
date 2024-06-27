@@ -22,16 +22,19 @@ int main(int argc, char **argv)
     mlx_t *mlx;
     t_image image;
 
+    map.image = &image;
+    
     //0-check argc, argv
     param_check(argc, argv, &map);
     //1-check map file, and read map
     map_initialize(&map);
-    //2-initial window, based on map size_>TODO
+    //2-initial window, based on map size  >>>TODO<<<
     if (!(mlx = mlx_init(1024, 512, "MLX42", true)))
 	{
 		puts(mlx_strerror(mlx_errno));
 		return(EXIT_FAILURE);
 	}
+    map.mlx = mlx;
     map.window_w = 1024;
     map.window_h = 512;
     //2-initial images
@@ -41,8 +44,9 @@ int main(int argc, char **argv)
     image_draw(mlx, &map, &image);
 
     //hooks
-    //mlx_loop_hook(mlx, ft_hook, image.player);
-
+    mlx_key_hook(mlx, my_keyhook, &map);
+    //close hook >>>TODO<<<
+    
     //loop
     mlx_loop(mlx);
 	
