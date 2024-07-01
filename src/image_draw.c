@@ -18,7 +18,9 @@ void draw_map(mlx_t *mlx, t_map *map, t_image *image, t_coord cur)
     else if (map->grid[cur.y][cur.x] == 'E')
 	{
 		mlx_image_to_window(mlx, image->empty, cur.x * scale, cur.y * scale);
-		mlx_image_to_window(mlx, image->exit, cur.x * scale, cur.y * scale);
+		mlx_image_to_window(mlx, image->exit2, cur.x * scale, cur.y * scale);
+		mlx_image_to_window(mlx, image->exit1, cur.x * scale, cur.y * scale);
+
 		map->exit.x = cur.x;
 		map->exit.y = cur.y;
 	}

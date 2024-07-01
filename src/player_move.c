@@ -8,19 +8,7 @@ static int check_grid_next(t_map *map)
         ft_printf("No passage! You cannot enter the area ahead.\n");
         return (0);
     }
-    //exit, check colloction number
-    if (map->grid[map->next.y][map->next.x] == 'E')
-    {
-        //didn't collect all, return 0
-        if (map->collect_get != map->collect_all)
-        {
-            ft_printf("Can't open! you need to collect all the fries first.\n");
-            ft_printf("Current Fries: %d/%d\n", map->collect_get, map->collect_all);
-            return (0);
-        }
-        //collect all, return 1
-    }
-    //other, move to
+    //others, move to
     return (1);
 }
 
@@ -45,7 +33,10 @@ static void get_collect(t_map *map, t_image *image)
     }
     //check collect number
     if (map->collect_get == map->collect_all)
+    {
         ft_printf("You've collected all the fries!\n");
+        image->exit1->instances[0].enabled = false;
+    }
     else
         ft_printf("Found Fries: %d/%d\n", map->collect_get, map->collect_all);  
 }
@@ -67,7 +58,21 @@ void player_move(t_map *map, t_image *image)
     //if collection;
     if (map->grid[map->cur.y][map->cur.x] == 'C')
         get_collect(map, image);
-    //if exit
-    //if (map->grid[map->cur.y][map->cur.x] == 'E') TODO
+    //if exit, check colloction number
+    if (map->grid[map->cur.y][map->cur.x] == 'E')
+    {
+        //didn't collect all, move to but not out return 0
+        if (map->collect_get != map->collect_all)
+        {
+            ft_printf("Can't open! you need to collect all the fries first.\n");
+            ft_printf("Current Fries: %d/%d\n", map->collect_get, map->collect_all);
+        }
+        //collect all, win
+        if (map->collect_get == map->collect_all)
+        {
+            ft_printf("You win!\n");
+            quit_game(map);
+        }    
+    }
         
 }

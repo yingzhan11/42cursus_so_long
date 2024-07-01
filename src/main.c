@@ -29,14 +29,12 @@ int main(int argc, char **argv)
     //1-check map file, and read map
     map_initialize(&map);
     //2-initial window, based on map size  >>>TODO<<<
-    if (!(mlx = mlx_init(1024, 512, "MLX42", true)))
-	{
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
+    mlx = mlx_init(1024, 512, "MLX42", true);
     map.mlx = mlx;
     map.window_w = 1024;
     map.window_h = 512;
+    if (!mlx)
+		error_info(&map, "Fail to initialize window");
     //2-initial images
     image_initialize(mlx, &map, &image);
     
@@ -45,11 +43,13 @@ int main(int argc, char **argv)
 
     //hooks
     mlx_key_hook(mlx, my_keyhook, &map);
-    //close hook >>>TODO<<<
+    // close hook
+    mlx_close_hook(mlx, my_closehook, &map);
     
     //loop
     mlx_loop(mlx);
-	
+    
     //close
     mlx_terminate(mlx);
+    return (EXIT_SUCCESS);
 }

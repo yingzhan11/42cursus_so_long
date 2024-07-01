@@ -8,15 +8,15 @@ static void file_check (t_map *map)
     
     //is file
     if (!map->filename)
-        error_info("NULL filname of map!");
+        error_info(map, "NULL filname of map!");
     //filename is *.ber
     length = ft_strlen(map->filename);
     if (ft_strncmp(&map->filename[length - 4], ".ber", 4))
-        error_info("Map name is not '*.ber'!");
+        error_info(map, "Map name is not '*.ber'!");
     //open
     fd = open(map->filename, O_RDONLY);
     if (fd == -1)
-        error_info("Failed to open map file!");
+        error_info(map, "Failed to open map file!");
     close (fd);
 }
 
@@ -27,6 +27,8 @@ void count_rows(t_map *map)
 
     map->rows = 0;
     fd = open(map->filename, O_RDONLY);
+    if (fd < 0)
+        error_info(map, "Failed to open map file!");
     while ((line = get_next_line(fd)) != NULL)
     {
         map->rows++;
@@ -43,16 +45,20 @@ void read_map(t_map *map)
 
     count_rows(map);
     map->cols = 0;
-    map->grid = malloc((map->rows) * sizeof(char *));
+    map->grid = malloc((map->rows + 1) * sizeof(char *));
     if (map->grid == NULL)
-        error_info("Failed to create map grid!");
-    y = 0;
+        error_info(map, "Failed to create map grid!");
     fd = open(map->filename, O_RDONLY);
+    if (fd < 0)
+        error_info(map, "Failed to open map file!");
+    y = 0;
     while ((line = get_next_line(fd)) != NULL) 
     {
         if (map->cols == 0) 
             map->cols = ft_strlen(line) - 1; // exclude newline character
         map->grid[y] = ft_strtrim(line, "\n");
+        if (!map->grid[y])
+            error_info(map, "Failed to create column in map grid!");
         y++;
         free(line);
     }
