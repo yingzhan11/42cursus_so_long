@@ -3,8 +3,8 @@ CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code -Ofast
 
 HEADERS	= -I ./include -I $(LIBMLX)/include -I $(LIBFT)
 
-LIBMLX	= ./lib/MLX42
-LIBFT = ./lib/libft
+LIBMLX	= ./MLX42
+LIBFT = ./libft
 
 LIBS	= $(LIBMLX)/build/libmlx42.a $(LIBFT)/libft.a -ldl -lglfw -pthread -lm
 
