@@ -25,7 +25,6 @@ void count_rows(t_map *map)
     char *line;
     int fd;
 
-    map->rows = 0;
     fd = open(map->filename, O_RDONLY);
     if (fd < 0)
         error_info(map, "Failed to open map file!");
@@ -44,7 +43,6 @@ void read_map(t_map *map)
     int fd;
 
     count_rows(map);
-    map->cols = 0;
     map->grid = malloc((map->rows + 1) * sizeof(char *));
     if (map->grid == NULL)
         error_info(map, "Failed to create map grid!");
@@ -54,8 +52,8 @@ void read_map(t_map *map)
     y = 0;
     while ((line = get_next_line(fd)) != NULL) 
     {
-        if (map->cols == 0) 
-            map->cols = ft_strlen(line) - 1; // exclude newline character
+        //if (map->cols == 0) 
+            //map->cols = ft_strlen(line) - 1; // exclude newline character
         map->grid[y] = ft_strtrim(line, "\n");
         if (!map->grid[y])
             error_info(map, "Failed to create column in map grid!");
@@ -73,6 +71,7 @@ void map_initialize(t_map *map)
     //read file to a 2d array
     read_map(map); //TODO
 
+    check_map(map);
     //check elements '01CEP' only 1E, 1C, 1P
     //check shape, rectangular
     //check closed walls

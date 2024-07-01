@@ -9,6 +9,8 @@
 # include <fcntl.h>
 # include <stdio.h>
 
+# define ELEMENTS "01PEC"
+
 typedef struct s_coord
 {
     int     x;
@@ -48,6 +50,9 @@ typedef struct s_map
     //collection numbers
     int     collect_all;
     int     collect_get;
+    //player and exit numberss
+    int     player_n;
+    int     exit_n;
     //exit coord
     t_coord     exit;
     //start coord
@@ -71,5 +76,6 @@ void    quit_game(t_map *map);
 void    delete_map(t_map *map);
 void    delete_image(t_map *map);
 void    my_closehook(void *param);
+void    check_map(t_map *map);
 
 #endif

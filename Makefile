@@ -6,9 +6,9 @@ HEADERS	= -I ./include -I $(LIBMLX)/include -I $(LIBFT)
 LIBMLX	= ./MLX42
 LIBFT = ./libft
 
-LIBS	= $(LIBMLX)/build/libmlx42.a $(LIBFT)/libft.a -ldl -lglfw -pthread -lm
-
-SRCS	= $(shell find ./src -iname "*.c")
+LIBS	= $(LIBMLX)/build/libmlx42.a $(LIBFT)/libft.a -ldl -lglfw -pthread -lm #libft.a 
+KK = 
+SRCS	= $(shell find ./src -iname "*.c") # not *
 OBJS	= ${SRCS:.c=.o}
 
 all: libmlx $(NAME)
@@ -17,11 +17,11 @@ libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
+	@cc $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
 
 $(NAME): $(OBJS)
 	@$(MAKE) -C $(LIBFT)
-	@$(CC) $(OBJS) $(LIBFT)/libft.a $(LIBS) $(HEADERS) -o $(NAME)
+	@cc $(OBJS) $(LIBFT)/libft.a $(LIBS) $(HEADERS) -o $(NAME) -Ofast
 
 clean:
 	@rm -rf $(OBJS)

@@ -22,8 +22,8 @@ int main(int argc, char **argv)
     mlx_t *mlx;
     t_image image;
 
+    ft_bzero(&map, sizeof(t_map));
     map.image = &image;
-    
     //0-check argc, argv
     param_check(argc, argv, &map);
     //1-check map file, and read map

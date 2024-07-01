@@ -11,7 +11,6 @@ void draw_map(mlx_t *mlx, t_map *map, t_image *image, t_coord cur)
 		mlx_image_to_window(mlx, image->empty, cur.x * scale, cur.y * scale);
     else if (map->grid[cur.y][cur.x] == 'C')
     {
-        map->collect_all++;
 		mlx_image_to_window(mlx, image->empty, cur.x * scale, cur.y * scale);
 		mlx_image_to_window(mlx, image->collect, cur.x * scale, cur.y * scale);
     }
@@ -39,7 +38,6 @@ void image_draw(mlx_t *mlx, t_map *map, t_image *image)
 	t_coord cur;
 
 	cur.y = 0;
-	map->collect_all = 0;
 	while (cur.y < map->rows)
 	{
 		cur.x = 0;
@@ -54,7 +52,5 @@ void image_draw(mlx_t *mlx, t_map *map, t_image *image)
 	cur = map->start;
 	map->cur.x = map->start.x;
 	map->cur.y = map->start.y;
-	map->collect_get = 0;
-	map->move = 0;
 	mlx_image_to_window(mlx, image->player, cur.x * map->scale, cur.y * map->scale);
 }
