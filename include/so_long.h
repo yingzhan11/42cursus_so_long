@@ -35,7 +35,6 @@ typedef struct s_map
     mlx_t   *mlx;
     t_image     image;
     //map file
-    //const char    *filename;
     char     **grid; //map
     int     rows; //y
     int     cols; //x

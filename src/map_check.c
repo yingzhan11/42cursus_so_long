@@ -90,6 +90,7 @@ int find_path(t_map *map, t_point cur, char **matrix)
     return (0);
 }
 
+//copy a map grid, find path, find 0 and collect and exit, start
 int check_path(t_map *map)
 {
     char **matrix;
@@ -98,7 +99,6 @@ int check_path(t_map *map)
 
     i = 0;
     path = 0;
-    //copy a map grid
     matrix = malloc((map->rows + 1) * (sizeof(char *)));
     if (!matrix)
         error_info(map, "Malloc error when check valid path.");
@@ -112,9 +112,7 @@ int check_path(t_map *map)
         }
         i++;
     }
-    //find path, find 0 and collect and exit, start
     path = find_path(map, map->start, matrix);
-    //clean copied grid
     delete_matrix(matrix, i);
     return (path);
 }

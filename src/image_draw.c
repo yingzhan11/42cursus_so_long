@@ -16,10 +16,8 @@ void draw_map(mlx_t *mlx, t_map *map, t_image *image, t_point cur)
     }
     else if (map->grid[cur.y][cur.x] == 'E')
 	{
-		mlx_image_to_window(mlx, image->empty, cur.x * scale, cur.y * scale);
 		mlx_image_to_window(mlx, image->exit2, cur.x * scale, cur.y * scale);
 		mlx_image_to_window(mlx, image->exit1, cur.x * scale, cur.y * scale);
-
 		map->exit.x = cur.x;
 		map->exit.y = cur.y;
 	}
@@ -32,25 +30,25 @@ void draw_map(mlx_t *mlx, t_map *map, t_image *image, t_point cur)
     }
 }
 
+//draw map, except player, record exit, start xy
 void image_draw(mlx_t *mlx, t_map *map)
 {
-    //draw map, except player, record exit, start xy
-	t_point cur;
+	int	x;
+	int	y;
 
-	cur.y = 0;
-	while (cur.y < map->rows)
+	y = 0;
+	while (y < map->rows)
 	{
-		cur.x = 0;
-		while (cur.x < map->cols)
+		x = 0;
+		while (x < map->cols)
 		{
-			draw_map(mlx, map, &map->image, cur);
-			cur.x++;
+			draw_map(mlx, map, &map->image, (t_point){x, y});
+			x++;
 		}
-		cur.y++;
+		y++;
 	}
-    //put player
-	cur = map->start;
-	map->cur.x = map->start.x;
-	map->cur.y = map->start.y;
-	mlx_image_to_window(mlx, map->image.player, cur.x * map->scale, cur.y * map->scale);
+	map->cur = map->start;
+	x = map->start.x;
+	y = map->start.y;
+	mlx_image_to_window(mlx, map->image.player, x * map->scale, y * map->scale);
 }
