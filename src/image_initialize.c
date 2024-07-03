@@ -38,6 +38,4 @@ void image_initialize(mlx_t *mlx, t_map *map, t_image *image)
     image->exit2 = image_load(mlx, map, "./textures/exit2.png");
     image->start = image_load(mlx, map, "./textures/start.png");
     image->player = image_load(mlx, map, "./textures/player.png");
-	
-	
 }

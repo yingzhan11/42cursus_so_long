@@ -16,40 +16,50 @@ static void param_check(int argc, char **argv, t_map *map)
         map->filename = argv[1];   
 }
 
+void window_initialize(t_map *map)
+{
+    int scale;
+    int x;
+    int y;
+
+    x = map->cols / 16;
+    y = map->rows / 16;
+    if ( x >= y)
+        scale = 160 / (x + 1);
+    else
+        scale = 160 / (y + 1);
+    map->window_w = map->cols * scale;
+    map->window_h = map->rows * scale;
+    map->mlx = mlx_init(map->window_w, map->window_h, "so_long", true);
+    if (!map->mlx)
+		error_info(map, "Fail to initialize window");
+}
+
 int main(int argc, char **argv)
 {
     t_map   map;
-    mlx_t *mlx;
     t_image image;
 
     ft_bzero(&map, sizeof(t_map));
-    map.image = &image;
+    
     //0-check argc, argv
     param_check(argc, argv, &map);
     //1-check map file, and read map
     map_initialize(&map);
     //2-initial window, based on map size  >>>TODO<<<
-    mlx = mlx_init(1024, 512, "MLX42", true);
-    map.mlx = mlx;
-    map.window_w = 1024;
-    map.window_h = 512;
-    if (!mlx)
-		error_info(&map, "Fail to initialize window");
+    window_initialize(&map);
     //2-initial images
-    image_initialize(mlx, &map, &image);
-    
+    map.image = &image;
+    image_initialize(map.mlx, &map, &image); 
 	//3-draw image on window, map character, exit, colloction
-    image_draw(mlx, &map, &image);
-
-    //hooks
-    mlx_key_hook(mlx, my_keyhook, &map);
-    // close hook
-    mlx_close_hook(mlx, my_closehook, &map);
-    
-    //loop
-    mlx_loop(mlx);
-    
-    //close
-    mlx_terminate(mlx);
+    image_draw(map.mlx, &map, &image);
+    //4-hooks
+    mlx_key_hook(map.mlx, my_keyhook, &map);
+    mlx_resize_hook(map.mlx, my_resizehook, &map);
+    mlx_close_hook(map.mlx, my_closehook, &map);
+    //5-loop
+    mlx_loop(map.mlx);
+    //6-close
+    mlx_terminate(map.mlx);
     return (EXIT_SUCCESS);
 }

@@ -11,11 +11,11 @@
 
 # define ELEMENTS "01PEC"
 
-typedef struct s_coord
+typedef struct s_point
 {
     int     x;
     int     y;
-}   t_coord;
+}   t_point;
 
 typedef struct s_image
 {
@@ -32,7 +32,6 @@ typedef struct s_image
 
 typedef struct s_map
 {
-    //
     mlx_t   *mlx;
     t_image     *image;
     //map file
@@ -54,13 +53,13 @@ typedef struct s_map
     int     player_n;
     int     exit_n;
     //exit coord
-    t_coord     exit;
+    t_point     exit;
     //start coord
-    t_coord     start;
+    t_point     start;
     //player curret location
-    t_coord     cur;
+    t_point     cur;
     //player next location
-    t_coord     next;
+    t_point     next;
 }   t_map;
 
 
@@ -76,6 +75,12 @@ void    quit_game(t_map *map);
 void    delete_map(t_map *map);
 void    delete_image(t_map *map);
 void    my_closehook(void *param);
-void    check_map(t_map *map);
+int  check_elements(t_map *map);
+int check_shape(t_map *map);
+int check_wall(t_map *map);
+int check_path(t_map *map);
+void    delete_matrix(char **matrix, int i);
+void    delete_image(t_map *map);
+void my_resizehook(int32_t width, int32_t height, void *param);
 
 #endif

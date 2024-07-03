@@ -52,8 +52,6 @@ void read_map(t_map *map)
     y = 0;
     while ((line = get_next_line(fd)) != NULL) 
     {
-        //if (map->cols == 0) 
-            //map->cols = ft_strlen(line) - 1; // exclude newline character
         map->grid[y] = ft_strtrim(line, "\n");
         if (!map->grid[y])
             error_info(map, "Failed to create column in map grid!");
@@ -71,9 +69,21 @@ void map_initialize(t_map *map)
     //read file to a 2d array
     read_map(map); //TODO
 
-    check_map(map);
-    //check elements '01CEP' only 1E, 1C, 1P
+    //check_map(map);
+    if (map->rows == 0)
+        error_info(map, "Map is empty.");
     //check shape, rectangular
+    if (check_shape(map) == 0)
+        error_info(map, "Map is not a rectangular.");
+    if (map->rows > 120 || map->cols > 120)
+        error_info(map, "This map is too big.");
+    //check elements '01CEP' only 1E, 1C, 1P
+    if (check_elements(map) == 0)
+        error_info(map, "Elements of map is invalid.");
     //check closed walls
+    if (check_wall(map) == 0)
+        error_info(map, "The map is not closed by walls.");
     //check path, atleast a valid path
+    if (check_path(map) == 0)
+        error_info(map, "Can't find a valid path on this map.");
 }

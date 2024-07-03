@@ -18,31 +18,37 @@ void    delete_image(t_map *map)
         mlx_delete_image(map->mlx, map->image->player);
 }
 
-void    delete_map(t_map *map)
+void    delete_matrix(char **matrix, int i)
 {
     int y;
 
     y = 0;
+    if (!matrix)
+        return ;
+    while (y < i)
+    {
+        free (matrix[y]);
+        y++;
+    }
+    free (matrix);
+}
+
+void    delete_map(t_map *map)
+{
     if (!map)
         return ;
     if (map->image)
         delete_image(map);
     if (map->grid)
-    {
-        while (y < map->rows)
-        {
-            free (map->grid[y]);
-            y++;
-        }
-        free (map->grid);
-    }
+        delete_matrix(map->grid, map->rows);
     if (map->mlx)
         mlx_terminate(map->mlx);
 }
 
 void    quit_game(t_map *map)
 {
-    delete_map(map);
+    if (map)
+        delete_map(map);
     exit(EXIT_SUCCESS);
 }
 

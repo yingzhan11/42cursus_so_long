@@ -1,6 +1,6 @@
 # include "so_long.h"
 
-void draw_map(mlx_t *mlx, t_map *map, t_image *image, t_coord cur)
+void draw_map(mlx_t *mlx, t_map *map, t_image *image, t_point cur)
 {
 	int scale;
 
@@ -35,7 +35,7 @@ void draw_map(mlx_t *mlx, t_map *map, t_image *image, t_coord cur)
 void image_draw(mlx_t *mlx, t_map *map, t_image *image)
 {
     //draw map, except player, record exit, start xy
-	t_coord cur;
+	t_point cur;
 
 	cur.y = 0;
 	while (cur.y < map->rows)

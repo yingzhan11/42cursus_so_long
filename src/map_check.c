@@ -2,7 +2,7 @@
 
 //check only '01CEP'
 //check number of 'E' and 'P', 'C'
-static int  check_elements(t_map *map)
+int  check_elements(t_map *map)
 {
     int y;
     int x;
@@ -16,7 +16,10 @@ static int  check_elements(t_map *map)
             if (!ft_strchr(ELEMENTS, map->grid[y][x]))
                 return (0);
             else if (map->grid[y][x] == 'P')
+            {
+                map->start = (t_point){x, y};
                 map->player_n++;
+            }
             else if (map->grid[y][x] == 'E')
                 map->exit_n++;
             else if (map->grid[y][x] == 'C')
@@ -28,7 +31,7 @@ static int  check_elements(t_map *map)
     return (0);
 }
 
-static int check_shape(t_map *map)
+int check_shape(t_map *map)
 {
     size_t len;
     int y;
@@ -45,7 +48,7 @@ static int check_shape(t_map *map)
     return (1);
 }
 
-static int check_wall(t_map *map)
+int check_wall(t_map *map)
 {
     int i;
 
@@ -64,24 +67,54 @@ static int check_wall(t_map *map)
         i++;
     }
     return (1);
-
 }
 
-void    check_map(t_map *map)
+int find_path(t_map *map, t_point cur, char **matrix)
 {
-    if (map->rows == 0)
-        error_info(map, "Map is empty.");
-    //check shape, rectangular
-    if (check_shape(map) == 0)
-        error_info(map, "Map is not a rectangular.");
-    //check elements '01CEP' only 1E, 1C, 1P
-    if (check_elements(map) == 0)
-        error_info(map, "Elements of map is invalid.");
-    //check closed walls
-    if (check_wall(map) == 0)
-        error_info(map, "The map is not closed by walls.");
-    //check path, atleast a valid path
+    static int collect = 0;
+    static int find_exit = 0;
+
+    if (matrix[cur.y][cur.x] == '1')
+        return (0);
+    else if (matrix[cur.y][cur.x] == 'C')
+        collect++;
+    else if (matrix[cur.y][cur.x] == 'E')
+        find_exit = 1;
+    matrix[cur.y][cur.x] = '1';
+    find_path(map, (t_point){cur.x + 1, cur.y}, matrix);
+    find_path(map, (t_point){cur.x - 1, cur.y}, matrix);
+    find_path(map, (t_point){cur.x, cur.y + 1}, matrix);
+    find_path(map, (t_point){cur.x, cur.y - 1}, matrix);
+    if (collect == map->collect_all && find_exit == 1)
+        return (1);
+    return (0);
 }
 
+int check_path(t_map *map)
+{
+    char **matrix;
+    int i;
+    int path;
 
-
+    i = 0;
+    path = 0;
+    //copy a map grid
+    matrix = malloc((map->rows + 1) * (sizeof(char *)));
+    if (!matrix)
+        error_info(map, "Malloc error when check valid path.");
+    while (i < map->rows)
+    {
+        matrix[i] = ft_strdup(map->grid[i]);
+        if (!matrix[i])
+        {
+            delete_matrix(matrix, i);
+            error_info(map, "Malloc error when check valid path.");
+        }
+        i++;
+    }
+    //find path, find 0 and collect and exit, start
+    path = find_path(map, map->start, matrix);
+    //clean copied grid
+    delete_matrix(matrix, i);
+    return (path);
+}
