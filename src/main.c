@@ -1,7 +1,8 @@
 # include "so_long.h"
 
-static void param_check(int argc, char **argv, t_map *map)
+static void param_check(int argc, char **argv)
 {
+    (void)argv;
     if (argc <= 1)
     {
         ft_printf("Please load one *.ber map file after './so_long '\n");
@@ -12,8 +13,8 @@ static void param_check(int argc, char **argv, t_map *map)
         ft_printf("Too many files! Only one each time!\n");
         exit (EXIT_FAILURE);
     }  
-    else
-        map->filename = argv[1];   
+    //else
+      //  map->filename = argv[1];   
 }
 
 void window_initialize(t_map *map)
@@ -38,21 +39,22 @@ void window_initialize(t_map *map)
 int main(int argc, char **argv)
 {
     t_map   map;
-    t_image image;
+    //t_image image;
 
     ft_bzero(&map, sizeof(t_map));
     
     //0-check argc, argv
-    param_check(argc, argv, &map);
+    param_check(argc, argv);
     //1-check map file, and read map
-    map_initialize(&map);
+    //map.filename = argv[1];
+    map_initialize(&map, argv[1]);
     //2-initial window, based on map size  >>>TODO<<<
     window_initialize(&map);
     //2-initial images
-    map.image = &image;
-    image_initialize(map.mlx, &map, &image); 
+    //map.image = &image;
+    image_initialize(map.mlx, &map); 
 	//3-draw image on window, map character, exit, colloction
-    image_draw(map.mlx, &map, &image);
+    image_draw(map.mlx, &map);
     //4-hooks
     mlx_key_hook(map.mlx, my_keyhook, &map);
     mlx_resize_hook(map.mlx, my_resizehook, &map);

@@ -2,20 +2,20 @@
 
 void    delete_image(t_map *map)
 {
-    if (map->image->empty)
-        mlx_delete_image(map->mlx, map->image->empty);
-    if (map->image->wall)
-        mlx_delete_image(map->mlx, map->image->wall);
-    if (map->image->collect)
-        mlx_delete_image(map->mlx, map->image->collect);
-    if (map->image->exit1)
-        mlx_delete_image(map->mlx, map->image->exit1);
-    if (map->image->exit2)
-        mlx_delete_image(map->mlx, map->image->exit2);
-    if (map->image->start)
-        mlx_delete_image(map->mlx, map->image->start);
-    if (map->image->player)
-        mlx_delete_image(map->mlx, map->image->player);
+    if (map->image.empty)
+        mlx_delete_image(map->mlx, map->image.empty);
+    if (map->image.wall)
+        mlx_delete_image(map->mlx, map->image.wall);
+    if (map->image.collect)
+        mlx_delete_image(map->mlx, map->image.collect);
+    if (map->image.exit1)
+        mlx_delete_image(map->mlx, map->image.exit1);
+    if (map->image.exit2)
+        mlx_delete_image(map->mlx, map->image.exit2);
+    if (map->image.start)
+        mlx_delete_image(map->mlx, map->image.start);
+    if (map->image.player)
+        mlx_delete_image(map->mlx, map->image.player);
 }
 
 void    delete_matrix(char **matrix, int i)
@@ -37,7 +37,7 @@ void    delete_map(t_map *map)
 {
     if (!map)
         return ;
-    if (map->image)
+    if (&map->image)
         delete_image(map);
     if (map->grid)
         delete_matrix(map->grid, map->rows);

@@ -26,16 +26,16 @@ mlx_image_t *image_load(mlx_t *mlx, t_map *map, const char *path)
     return(image);
 }
 
-void image_initialize(mlx_t *mlx, t_map *map, t_image *image)
+void image_initialize(mlx_t *mlx, t_map *map)
 {
     //check image size
-    image_size(map, image);
+    image_size(map, &map->image);
     //load image
-    image->empty = image_load(mlx, map, "./textures/empty.png");
-    image->wall = image_load(mlx, map, "./textures/wall.png");
-    image->collect = image_load(mlx, map, "./textures/collect.png");
-    image->exit1 = image_load(mlx, map, "./textures/exit1.png");
-    image->exit2 = image_load(mlx, map, "./textures/exit2.png");
-    image->start = image_load(mlx, map, "./textures/start.png");
-    image->player = image_load(mlx, map, "./textures/player.png");
+    map->image.empty = image_load(mlx, map, "./textures/empty.png");
+    map->image.wall = image_load(mlx, map, "./textures/wall.png");
+    map->image.collect = image_load(mlx, map, "./textures/collect.png");
+    map->image.exit1 = image_load(mlx, map, "./textures/exit1.png");
+    map->image.exit2 = image_load(mlx, map, "./textures/exit2.png");
+    map->image.start = image_load(mlx, map, "./textures/start.png");
+    map->image.player = image_load(mlx, map, "./textures/player.png");
 }

@@ -33,9 +33,9 @@ typedef struct s_image
 typedef struct s_map
 {
     mlx_t   *mlx;
-    t_image     *image;
+    t_image     image;
     //map file
-    char    *filename;
+    //const char    *filename;
     char     **grid; //map
     int     rows; //y
     int     cols; //x
@@ -64,10 +64,10 @@ typedef struct s_map
 
 
 
-void map_initialize(t_map *map);
+void map_initialize(t_map *map, char *filename);
 void    error_info(t_map *map, char *message);
-void image_initialize(mlx_t *mlx, t_map *map, t_image *image);
-void image_draw(mlx_t *mlx, t_map *map, t_image *image);
+void image_initialize(mlx_t *mlx, t_map *map);
+void image_draw(mlx_t *mlx, t_map *map);
 void my_keyhook(mlx_key_data_t keydata, void *param);
 void player_move(t_map *map, t_image *image);
 mlx_image_t *image_load(mlx_t *mlx, t_map *map, const char *path);

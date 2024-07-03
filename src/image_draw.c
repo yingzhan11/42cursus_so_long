@@ -32,7 +32,7 @@ void draw_map(mlx_t *mlx, t_map *map, t_image *image, t_point cur)
     }
 }
 
-void image_draw(mlx_t *mlx, t_map *map, t_image *image)
+void image_draw(mlx_t *mlx, t_map *map)
 {
     //draw map, except player, record exit, start xy
 	t_point cur;
@@ -43,7 +43,7 @@ void image_draw(mlx_t *mlx, t_map *map, t_image *image)
 		cur.x = 0;
 		while (cur.x < map->cols)
 		{
-			draw_map(mlx, map, image, cur);
+			draw_map(mlx, map, &map->image, cur);
 			cur.x++;
 		}
 		cur.y++;
@@ -52,5 +52,5 @@ void image_draw(mlx_t *mlx, t_map *map, t_image *image)
 	cur = map->start;
 	map->cur.x = map->start.x;
 	map->cur.y = map->start.y;
-	mlx_image_to_window(mlx, image->player, cur.x * map->scale, cur.y * map->scale);
+	mlx_image_to_window(mlx, map->image.player, cur.x * map->scale, cur.y * map->scale);
 }
