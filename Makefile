@@ -11,7 +11,7 @@ LIBFT_A = $(LIBFT_DIR)/libft.a
 SRCS	= main.c map_init.c map_check.c image_init.c image_draw.c hook.c player_move.c tools.c
 OBJS	= $(SRCS:.c=.o)
 
-all: $(NAME)
+all: clone $(NAME)
 
 clone:
 	@if [ ! -d "$(LIBMLX_DIR)" ]; then \
@@ -20,7 +20,7 @@ clone:
 		echo "$(LIBMLX_DIR) already exists."; \
 	fi
 
-libmlx: clone
+libmlx:
 	@cmake $(LIBMLX_DIR) -B $(LIBMLX_DIR)/build && make -C $(LIBMLX_DIR)/build -j4
 
 libft:
