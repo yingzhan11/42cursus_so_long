@@ -1,85 +1,84 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/03 17:05:31 by yzhan             #+#    #+#             */
+/*   Updated: 2024/07/04 09:44:50 by yzhan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include <MLX42/MLX42.h>
-# include <libft.h>
-# include <ft_printf/ft_printf.h>
-# include <get_next_line/get_next_line.h>
-
+# include "MLX42/MLX42.h"
+# include "libft.h"
+# include "ft_printf/ft_printf.h"
+# include "get_next_line/get_next_line.h"
+# include <unistd.h>
 # include <fcntl.h>
-# include <stdio.h>
+# include <stdlib.h>
 
 # define ELEMENTS "01PEC"
 
 typedef struct s_point
 {
-    int     x;
-    int     y;
-}   t_point;
+	int			x;
+	int			y;
+}	t_point;
 
 typedef struct s_image
 {
-    int image_w;
-    int image_h;
-    mlx_image_t *empty;
-    mlx_image_t *wall;
-    mlx_image_t *collect;
-    mlx_image_t *exit1;
-    mlx_image_t *exit2;
-    mlx_image_t *start;
-    mlx_image_t *player;
-}   t_image;
+	int			image_w;
+	int			image_h;
+	mlx_image_t	*empty;
+	mlx_image_t	*wall;
+	mlx_image_t	*collect;
+	mlx_image_t	*exit1;
+	mlx_image_t	*exit2;
+	mlx_image_t	*start;
+	mlx_image_t	*player;
+}	t_image;
 
 typedef struct s_map
 {
-    mlx_t   *mlx;
-    t_image     image;
-    //map file
-    char     **grid; //map
-    int     rows; //y
-    int     cols; //x
-    //mlx size
-    int     window_w;
-    int     window_h;
-    //scale
-    int     scale;
-    //player moves
-    int     move;
-    //collection numbers
-    int     collect_all;
-    int     collect_get;
-    //player and exit numberss
-    int     player_n;
-    int     exit_n;
-    //exit coord
-    t_point     exit;
-    //start coord
-    t_point     start;
-    //player curret location
-    t_point     cur;
-    //player next location
-    t_point     next;
-}   t_map;
+	mlx_t		*mlx;
+	t_image		image;
+	char		**grid;
+	int			rows;
+	int			cols;
+	int			window_w;
+	int			window_h;
+	int			scale;
+	int			move;
+	int			collect_all;
+	int			collect_get;
+	int			player_n;
+	int			exit_n;
+	t_point		exit;
+	t_point		start;
+	t_point		cur;
+	t_point		next;
+}	t_map;
 
-
-
-void map_initialize(t_map *map, char *filename);
-void    error_info(t_map *map, char *message);
-void image_initialize(mlx_t *mlx, t_map *map);
-void image_draw(mlx_t *mlx, t_map *map);
-void my_keyhook(mlx_key_data_t keydata, void *param);
-void player_move(t_map *map, t_image *image);
-mlx_image_t *image_load(mlx_t *mlx, t_map *map, const char *path);
-void    quit_game(t_map *map);
-void    delete_map(t_map *map);
-void    delete_image(t_map *map);
-void    my_closehook(void *param);
-int  check_elements(t_map *map);
-int check_shape(t_map *map);
-int check_wall(t_map *map);
-int check_path(t_map *map);
-void    delete_matrix(char **matrix, int i);
-void    delete_image(t_map *map);
-void my_resizehook(int32_t width, int32_t height, void *param);
+void	map_initialize(t_map *map, char *filename);
+int		check_elements(t_map *map);
+int		check_shape(t_map *map);
+int		check_wall(t_map *map);
+int		find_path(t_map *map, t_point cur, char **matrix);
+int		check_path(t_map *map);
+void	image_initialize(mlx_t *mlx, t_map *map);
+void	image_draw(mlx_t *mlx, t_map *map);
+void	my_keyhook(mlx_key_data_t keydata, void *param);
+void	my_resizehook(int32_t width, int32_t height, void *param);
+void	my_closehook(void *param);
+void	player_move(t_map *map, t_image *image);
+void	error_info(t_map *map, char *message);
+void	quit_game(t_map *map);
+void	delete_map(t_map *map);
+void	delete_image(t_map *map);
+void	delete_matrix(char **matrix, int i);
 
 #endif
