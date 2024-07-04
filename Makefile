@@ -1,46 +1,46 @@
 NAME	= so_long
 CFLAGS	= -Wextra -Wall -Werror
 
-LIBMLX	= MLX42
-LIBFT = libft
-HEADERS	= -I include -I $(LIBMLX)/include -I $(LIBFT)
-LIBS	= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
+LIBFT_DIR = LIBFT
+LIBMLX_DIR = MLX42
+LIBMLX_URL = https://github.com/codam-coding-college/MLX42.git
+HEADERS = -I $(LIBMLX_DIR)/include -I $(LIBFT_DIR)
+LIBMLX_A = $(LIBMLX_DIR)/build/libmlx42.a -ldl -lglfw -pthread -lm
+LIBFT_A = $(LIBFT_DIR)/libft.a
 
-SRCS_DIR = src
 SRCS	= main.c map_init.c map_check.c image_init.c image_draw.c hook.c player_move.c tools.c
-OBJS	= $(addprefix $(SRCS_DIR)/, $(SRCS:.c=.o))
+OBJS	= $(SRCS:.c=.o)
 
-MLX_URL = https://github.com/codam-coding-college/MLX42.git
-MLX_DIR = MLX42
-
-all: clone libmlx $(NAME)
+all: $(NAME)
 
 clone:
-	@if [ ! -d "$(MLX_DIR)" ]; then \
-		git clone $(MLX_URL); \
+	@if [ ! -d "$(LIBMLX_DIR)" ]; then \
+		git clone $(LIBMLX_URL); \
 	else \
-		echo "$(MLX_DIR) already exists."; \
+		echo "$(LIBMLX_DIR) already exists."; \
 	fi
 
-libmlx:
-	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+libmlx: clone
+	@cmake $(LIBMLX_DIR) -B $(LIBMLX_DIR)/build && make -C $(LIBMLX_DIR)/build -j4
+
+libft:
+	@make -C $(LIBFT_DIR)
 
 %.o: %.c
 	@cc $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)\n"
 
-$(NAME): $(OBJS)
-	@$(MAKE) -C $(LIBFT)
-	@cc $(OBJS) $(LIBFT)/libft.a $(LIBS) $(HEADERS) -o $(NAME)
+$(NAME): $(OBJS) libmlx libft
+	cc $(OBJS) $(LIBFT_A) $(LIBMLX_A) -o $@
 
 clean:
 	@rm -rf $(OBJS)
-	@rm -rf $(LIBMLX)/build
-	@$(MAKE) -C $(LIBFT) clean
+	@rm -rf $(LIBMLX_DIR)/build
+	@make -C $(LIBFT_DIR) clean
 
 fclean: clean
 	@rm -rf $(NAME)
-	@$(MAKE) -C $(LIBFT) fclean
+	@make -C $(LIBFT_DIR) fclean
 
 re: clean all
 
-.PHONY: all, clean, fclean, re, clone, libmlx
+.PHONY: all, clean, fclean, re, clone, libmlx, libft
