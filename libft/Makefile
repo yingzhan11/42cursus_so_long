@@ -30,17 +30,17 @@ PTF_OBJ = $(addprefix $(PTF_DIR)/, $(PTF_SRC:.c=.o))
 
 
 %.o : %.c
-	$(cc) $(FLAGS) -c $< -o $@
+	@$(cc) $(FLAGS) -c $< -o $@ && printf "Compiling: $(notdir $<)\n"
 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(GNL_OBJ) $(PTF_OBJ)
-	ar -rc $@ $^
+	@ar -rc $@ $^
 
 bonus: .bonus
 
 .bonus: $(OBJ_BONUS)
-	ar -rc $(NAME) $^
+	@ar -rc $(NAME) $^
 	@touch .bonus
 
 clean:
@@ -51,3 +51,5 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all, clean, fclean, re, bonus
