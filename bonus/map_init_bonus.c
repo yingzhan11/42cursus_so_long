@@ -91,11 +91,16 @@ void	map_initialize(t_map *map, char *filename)
 		error_info(map, "Map is not a rectangular.");
 	if (map->rows > 120 || map->cols > 120)
 		error_info(map, "This map is too big.");
-	if (check_elements(map) == 0)
-		error_info(map, "Elements of map is invalid.");
 	if (check_wall(map) == 0)
 		error_info(map, "The map is not closed by walls.");
+	if (check_elements(map) == 0)
+		error_info(map, "Elements of map is invalid.");
+	
+	if (check_enemy(map) == 0)
+		error_info(map, "Too many enemy.");
+
 	if (check_path(map) == 0)
 		error_info(map, "Can't find a valid path on this map.");
 	map->cur = (t_point){map->start.x, map->start.y};
+	
 }

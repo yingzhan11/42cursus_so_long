@@ -75,17 +75,50 @@ int	check_elements(t_map *map)
 				map->exit_n++;
 			else if (map->grid[y][x] == 'C')
 				map->collect_all++;
-			else if (map->grid[y][x] == 'H')
-			{
-				map->enemy_sp = (t_point){x, y};
+			else if (map->grid[y][x] == 'H' || map->grid[y][x] == 'V')
 				map->enemy_n++;
-				map->enemy_d = 'r';
-			}
+			else if (map->grid[y][x] == '0')
+				map->empty_n++;
 		}
 	}
+	map->empty_n = map->empty_n + map->collect_all + 2;
 	if (map->player_n == 1 && map->exit_n == 1 && map->collect_all >= 1)
 		return (1);
 	return (0);
+}
+
+int check_enemy(t_map *map)
+{
+	int	y;
+	int x;
+	int i;
+
+	map->enemy = malloc(map->enemy_n * sizeof(t_enemy));
+	if (!map->enemy)
+		error_info(map, "Failed to get enemy positions.");
+	y = -1;
+	i = 0;
+	while (++y < map->rows)
+	{
+		x = -1;
+		while (++x < map->cols)
+		{
+			if (map->grid[y][x] == 'H' || (map->grid[y][x] == 'V'))
+			{
+				map->enemy[i].type = map->grid[y][x];
+				map->enemy[i].pos = (t_point){x, y};
+				if (map->grid[y][x] == 'H')
+					map->enemy[i].dir = 'r';
+				if (map->grid[y][x] == 'V')
+					map->enemy[i].dir = 'd';
+				i++;
+			}
+		}
+	}
+	map->enemy_den = map->enemy_n * 100 / map->empty_n;
+	if (map->enemy_den > 5)
+		return (0);
+	return (1);
 }
 
 //func to find a path

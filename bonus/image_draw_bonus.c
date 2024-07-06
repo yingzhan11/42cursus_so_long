@@ -40,6 +40,22 @@ static void	draw_map(mlx_t *mlx, t_map *map, t_image *image, t_point cur)
 		mlx_image_to_window(mlx, image->start, cur.x * scale, cur.y * scale);
 }
 
+void draw_enemy(mlx_t *mlx, t_map *map, t_image *image, t_enemy *enemy)
+{
+	int i;
+	int	x;
+	int	y;
+
+	i = 0;
+	while (i < map->enemy_n)
+	{
+		x = enemy[i].pos.x;
+		y = enemy[i].pos.y;
+		mlx_image_to_window(mlx, image->enemy, x * map->scale, y * map->scale);
+		i++;
+	}
+}
+
 //draw map to window, then get the player position and put the player image
 void	image_draw(mlx_t *mlx, t_map *map)
 {
@@ -58,9 +74,8 @@ void	image_draw(mlx_t *mlx, t_map *map)
 		y++;
 	}
 	//draw enemy
-	x = map->enemy_sp.x;
-	y = map->enemy_sp.y;
-	mlx_image_to_window(mlx, map->image.enemy, x * map->scale, y * map->scale);
+	draw_enemy(mlx, map, &map->image, map->enemy);
+	
 	x = map->cur.x;
 	y = map->cur.y;
 	mlx_image_to_window(mlx, map->image.player, x * map->scale, y * map->scale);

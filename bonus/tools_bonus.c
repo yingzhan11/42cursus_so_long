@@ -54,6 +54,8 @@ void	delete_map(t_map *map)
 	delete_image(map);
 	if (map->grid)
 		delete_matrix(map->grid, map->rows);
+	if (map->enemy)
+		free(map->enemy);
 	if (map->mlx)
 		mlx_terminate(map->mlx);
 }

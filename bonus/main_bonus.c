@@ -60,7 +60,9 @@ int	main(int argc, char **argv)
 	mlx_key_hook(map.mlx, my_keyhook, &map);
 	mlx_resize_hook(map.mlx, my_resizehook, &map);
 	mlx_close_hook(map.mlx, my_closehook, &map);
+	
 	mlx_loop_hook(map.mlx, my_updatehook, &map);
+
 	mlx_loop(map.mlx);
 	mlx_terminate(map.mlx);
 	return (EXIT_SUCCESS);

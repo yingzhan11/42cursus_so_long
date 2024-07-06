@@ -21,7 +21,7 @@
 # include <fcntl.h>
 # include <stdlib.h>
 
-# define ELEMENTS "01PECH"
+# define ELEMENTS "01PECHV"
 
 typedef struct s_point
 {
@@ -43,12 +43,13 @@ typedef struct s_image
 	mlx_image_t *enemy;
 }	t_image;
 
-/*typedef struct s_enemy
+typedef struct s_enemy
 {
-	//count
-	//type
-	//start place
-}*/
+	char	type;
+	char	dir; //dirction
+	t_point	pos; //position
+	t_point cur;
+} t_enemy;
 
 typedef struct s_map
 {
@@ -61,17 +62,20 @@ typedef struct s_map
 	int			window_h;
 	int			scale;
 	int			move;
+	int			empty_n;
 	int			collect_all;
 	int			collect_get;
 	int			exit_n;
 	int			player_n;
+	//enemy
 	int			enemy_n;
-	char		enemy_d;
-	//t_enemy e_v;
-	//t_enemy e_h;
+	int			enemy_den; //density
+	t_enemy		*enemy;
+	//char		enemy_d;
+	
 	double		time;
-	double		now;
-	t_point		enemy_sp;
+	
+	//t_point		enemy_sp;
 	t_point		exit;
 	t_point		start;
 	t_point		cur;
@@ -98,5 +102,6 @@ void	delete_matrix(char **matrix, int i);
 
 void my_updatehook(void *param);
 void enemy_move(t_map *map, double time);
+int check_enemy(t_map *map);
 
 #endif
