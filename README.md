@@ -21,4 +21,12 @@
 
 **Add some sprite animation.**
 
+**enemy animation**
+
+√ 1-add enemy animation, move right-left, up-down. cannt change dir now
+
+**TODO** 2-put enemy image in t_enemy, for each enemy. the full image for all animation in t_image. when enemy change dir, put_pixel from full enemy image in t_image.
+
+**TODO** **player animation**
+
 **Display the movement count directly on screen instead of writing it in the shell.**
