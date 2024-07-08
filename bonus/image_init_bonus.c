@@ -48,8 +48,6 @@ mlx_image_t *animation_load(mlx_t *mlx, t_map *map, const char *path, int rows, 
 	anima = mlx_texture_to_image(mlx, texture);
 	mlx_delete_texture(texture);
 	mlx_resize_image(anima, map->scale * cols, map->scale * rows);
-	//anima->cols = cols;
-	//anima->rows = rows;
 	return (anima);
 }
 
