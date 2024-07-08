@@ -2,7 +2,7 @@
 
 # Bonus
 
-**Make the player lose when they touch an enemy patrol.**
+## Make the player lose when they touch an enemy patrol.
 
 √ 1-获取敌人数量，敌人起始位置，敌人类型（V & H）， 敌人方向（d & l）：V方向敌人默认先向下走，H方向的敌人默认先向右走
 
@@ -19,14 +19,14 @@
 √ 7-敌人遇到玩家时，退出游戏。敌人移动之后检测当前位置坐标是否与玩家当前坐标一样
 
 
-**Add some sprite animation.**
+## Add some sprite animation.
 
-**enemy animation**
+_**enemy animation**_
 
-√ 1-add enemy animation, move right-left, up-down. cannt change dir now
+√ 1-add enemy animation, fly as time changes. cannt change dir now
 
-**TODO** 2-put enemy image in t_enemy, for each enemy. the full image for all animation in t_image. when enemy change dir, put_pixel from full enemy image in t_image.
+**TODO** 2-change dircetion. put enemy image in t_enemy, for each enemy. the full image for all animation in t_image. when enemy change dir, put_pixel from full enemy image in t_image.
 
-**TODO** **player animation**
+_**TODO** **player animation**_
 
-**Display the movement count directly on screen instead of writing it in the shell.**
+## Display the movement count directly on screen instead of writing it in the shell.
