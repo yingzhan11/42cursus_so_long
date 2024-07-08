@@ -36,6 +36,23 @@ static mlx_image_t	*image_load(mlx_t *mlx, t_map *map, const char *path)
 	return (image);
 }
 
+
+mlx_image_t *animation_load(mlx_t *mlx, t_map *map, const char *path, int rows, int cols)
+{	
+	mlx_texture_t	*texture;
+	mlx_image_t	*anima;
+
+	texture = mlx_load_png(path);
+	if (!texture)
+		error_info(map, "Fail to load animation2.");
+	anima = mlx_texture_to_image(mlx, texture);
+	mlx_delete_texture(texture);
+	mlx_resize_image(anima, map->scale * cols, map->scale * rows);
+	//anima->cols = cols;
+	//anima->rows = rows;
+	return (anima);
+}
+
 //calculate image size & load image
 void	image_initialize(mlx_t *mlx, t_map *map)
 {
@@ -48,6 +65,8 @@ void	image_initialize(mlx_t *mlx, t_map *map)
 	map->image.start = image_load(mlx, map, "./textures/bonus/start.png");
 	map->image.player = image_load(mlx, map, "./textures/bonus/player.png");
 	//emeny image
-	map->image.enemy = image_load(mlx, map, "./textures/bonus/ene_h.png");
+	map->image.enemy_h = mlx_new_image(mlx, map->scale, map->scale);
+	map->image.enemy_v = mlx_new_image(mlx, map->scale, map->scale);
+	map->image.enemy_a = animation_load(mlx, map, "./textures/bonus/enemy.png", 3, 4);
 	
 }

@@ -35,6 +35,8 @@ static void	draw_map(mlx_t *mlx, t_map *map, t_image *image, t_point cur)
 		mlx_image_to_window(mlx, image->exit2, cur.x * scale, cur.y * scale);
 }
 
+
+
 void draw_enemy(mlx_t *mlx, t_map *map, t_image *image, t_enemy *enemy)
 {
 	int i;
@@ -46,7 +48,20 @@ void draw_enemy(mlx_t *mlx, t_map *map, t_image *image, t_enemy *enemy)
 	{
 		x = enemy[i].pos.x;
 		y = enemy[i].pos.y;
-		mlx_image_to_window(mlx, image->enemy, x * map->scale, y * map->scale);
+		if (enemy[i].type == 'H')
+		{
+			copy_anima_to_image(image->enemy_h, image->enemy_a, 0, 0);
+			mlx_image_to_window(mlx, image->enemy_h, x * map->scale, y * map->scale);
+			enemy[i].cols = 0;
+			enemy[i].rows = 0;
+		}
+		if (enemy[i].type == 'V')
+		{
+			copy_anima_to_image(image->enemy_v, image->enemy_a, 0, 1);
+			mlx_image_to_window(mlx, image->enemy_v, x * map->scale, y * map->scale);
+			enemy[i].cols = 0;
+			enemy[i].rows = 1;
+		}
 		i++;
 	}
 }
