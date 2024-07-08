@@ -20,15 +20,12 @@ static void	draw_map(mlx_t *mlx, t_map *map, t_image *image, t_point cur)
 	scale = map->scale;
 	if (map->grid[cur.y][cur.x] == '1')
 		mlx_image_to_window(mlx, image->wall, cur.x * scale, cur.y * scale);
-	else if (map->grid[cur.y][cur.x] == '0' || map->grid[cur.y][cur.x] == 'H')
+	else if (map->grid[cur.y][cur.x] == 'P')
+		mlx_image_to_window(mlx, image->start, cur.x * scale, cur.y * scale);
+	else
 		mlx_image_to_window(mlx, image->empty, cur.x * scale, cur.y * scale);
-	else if (map->grid[cur.y][cur.x] == 'C')
-	{
-		mlx_image_to_window(mlx, image->empty, cur.x * scale, cur.y * scale);
+	if (map->grid[cur.y][cur.x] == 'C')
 		mlx_image_to_window(mlx, image->collect, cur.x * scale, cur.y * scale);
-	}
-	else if (map->grid[cur.y][cur.x] == 'c')
-		mlx_image_to_window(mlx, image->empty, cur.x * scale, cur.y * scale);
 	else if (map->grid[cur.y][cur.x] == 'E')
 	{
 		mlx_image_to_window(mlx, image->exit2, cur.x * scale, cur.y * scale);
@@ -36,8 +33,6 @@ static void	draw_map(mlx_t *mlx, t_map *map, t_image *image, t_point cur)
 	}
 	else if (map->grid[cur.y][cur.x] == 'e')
 		mlx_image_to_window(mlx, image->exit2, cur.x * scale, cur.y * scale);
-	else if (map->grid[cur.y][cur.x] == 'P')
-		mlx_image_to_window(mlx, image->start, cur.x * scale, cur.y * scale);
 }
 
 void draw_enemy(mlx_t *mlx, t_map *map, t_image *image, t_enemy *enemy)
