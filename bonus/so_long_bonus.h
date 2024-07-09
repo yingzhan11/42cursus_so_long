@@ -40,11 +40,8 @@ typedef struct s_image
 	mlx_image_t	*exit1;
 	mlx_image_t	*exit2;
 	mlx_image_t	*start;
-	mlx_image_t	*player;
-	mlx_image_t *enemy_h;
-	mlx_image_t *enemy_v;
+	mlx_image_t	*player_a;
 	mlx_image_t *enemy_a;
-	
 }	t_image;
 
 typedef struct s_enemy
@@ -52,10 +49,18 @@ typedef struct s_enemy
 	char	type;
 	char	dir; //dirction
 	t_point	pos; //position
-	t_point cur;
+	mlx_image_t *image;
 	int	cols;
 	int	rows;
 } t_enemy;
+
+typedef struct s_player
+{
+	char	dir; //dirction
+	mlx_image_t *image;
+	int	cols;
+	int	rows;
+} t_player;
 
 typedef struct s_map
 {
@@ -73,6 +78,7 @@ typedef struct s_map
 	int			collect_get;
 	int			exit_n;
 	int			player_n;
+	t_player	player;
 	//enemy
 	int			enemy_n;
 	int			enemy_den; //density
@@ -97,7 +103,7 @@ void	image_draw(mlx_t *mlx, t_map *map);
 void	my_keyhook(mlx_key_data_t keydata, void *param);
 void	my_resizehook(int32_t width, int32_t height, void *param);
 void	my_closehook(void *param);
-void	player_move(t_map *map, t_image *image);
+void	player_move(t_map *map, mlx_image_t *image);
 void	error_info(t_map *map, char *message);
 void	quit_game(t_map *map);
 void	delete_map(t_map *map);
@@ -105,8 +111,10 @@ void	delete_image(t_map *map);
 void	delete_matrix(char **matrix, int i);
 
 void my_updatehook(void *param);
-void enemy_move(t_map *map, double time);
+void enemy_update(t_map *map, double time);
+void enemy_move(t_map *map);
 int check_enemy(t_map *map);
 void copy_anima_to_image(mlx_image_t *image, mlx_image_t *anima, uint32_t cols, uint32_t rows);
+void player_update(t_map *map, double newtime);
 
 #endif

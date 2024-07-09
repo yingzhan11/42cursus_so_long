@@ -56,19 +56,19 @@ static void	get_collect(t_map *map, t_image *image)
 /*func to move player and check collet and exit
 check next, if wall or not
 then change the current coord and check collect num and exit*/
-void	player_move(t_map *map, t_image *image)
+void	player_move(t_map *map, mlx_image_t *image)
 {
 	int	collect;
 
 	if (check_grid_next(map) == 0)
 		return ;
-	image->player->instances[0].x = map->next.x * map->scale;
-	image->player->instances[0].y = map->next.y * map->scale;
+	image->instances[0].x = map->next.x * map->scale;
+	image->instances[0].y = map->next.y * map->scale;
 	map->move++;
 	ft_printf("Steps count: %d\n", map->move);
 	map->cur = map->next;
 	if (map->grid[map->cur.y][map->cur.x] == 'C')
-		get_collect(map, image);
+		get_collect(map, &map->image);
 	collect = map->collect_get;
 	if (map->grid[map->cur.y][map->cur.x] == 'E')
 	{
@@ -85,4 +85,22 @@ void	player_move(t_map *map, t_image *image)
 		ft_printf("GAME OVER!\n");
 		quit_game(map);
 	}
+}
+
+
+
+void player_update(t_map *map, double newtime)
+{
+    static int  cols = 0;
+    static double flytime = 0;
+
+    flytime += newtime;
+    if (cols >= 4)
+        cols = 0;
+    if (flytime > 0.25)
+    {
+        copy_anima_to_image(map->player.image, map->image.player_a, cols, map->player.rows);
+        cols++;
+        flytime -= 0.25;
+    }
 }

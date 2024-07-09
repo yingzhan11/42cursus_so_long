@@ -61,10 +61,17 @@ void	image_initialize(mlx_t *mlx, t_map *map)
 	map->image.exit1 = image_load(mlx, map, "./textures/bonus/exit1.png");
 	map->image.exit2 = image_load(mlx, map, "./textures/bonus/exit2.png");
 	map->image.start = image_load(mlx, map, "./textures/bonus/start.png");
-	map->image.player = image_load(mlx, map, "./textures/bonus/player.png");
+
+	map->image.player_a = animation_load(mlx, map, "./textures/bonus/Player_Stand.png", 4, 4);
+	map->player.image = mlx_new_image(mlx, map->scale, map->scale);
 	//emeny image
-	map->image.enemy_h = mlx_new_image(mlx, map->scale, map->scale);
-	map->image.enemy_v = mlx_new_image(mlx, map->scale, map->scale);
-	map->image.enemy_a = animation_load(mlx, map, "./textures/bonus/enemy.png", 3, 4);
+	map->image.enemy_a = animation_load(mlx, map, "./textures/bonus/enemy.png", 4, 4);
+	int i = 0;
+	while (i < map->enemy_n)
+	{
+		map->enemy[i].image = mlx_new_image(mlx, map->scale, map->scale);
+		i++;
+	}
+	
 	
 }

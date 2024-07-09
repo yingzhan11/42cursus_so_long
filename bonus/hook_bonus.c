@@ -23,22 +23,22 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
 	{
 		map->next = (t_point){map->cur.x, map->cur.y - 1};
-		player_move(map, &map->image);
+		player_move(map, map->player.image);
 	}
 	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
 	{
 		map->next = (t_point){map->cur.x, map->cur.y + 1};
-		player_move(map, &map->image);
+		player_move(map, map->player.image);
 	}
 	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
 	{
 		map->next = (t_point){map->cur.x - 1, map->cur.y};
-		player_move(map, &map->image);
+		player_move(map, map->player.image);
 	}
 	if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
 	{
 		map->next = (t_point){map->cur.x + 1, map->cur.y};
-		player_move(map, &map->image);
+		player_move(map, map->player.image);
 	}
 }
 
@@ -71,5 +71,6 @@ void my_updatehook(void *param)
 	
 	map = (t_map *)param;
 	map->time = map->mlx->delta_time;
-	enemy_move(map, map->time);
+	enemy_update(map, map->time);
+	player_update(map, map->time);
 }
