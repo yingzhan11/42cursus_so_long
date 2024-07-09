@@ -37,7 +37,7 @@ static mlx_image_t	*image_load(mlx_t *mlx, t_map *map, const char *path)
 }
 
 
-mlx_image_t *animation_load(mlx_t *mlx, t_map *map, const char *path, int rows, int cols)
+mlx_image_t *animation_load(mlx_t *mlx, t_map *map, const char *path, int cols, int rows)
 {	
 	mlx_texture_t	*texture;
 	mlx_image_t	*anima;
@@ -63,6 +63,7 @@ void	image_initialize(mlx_t *mlx, t_map *map)
 	map->image.start = image_load(mlx, map, "./textures/bonus/start.png");
 
 	map->image.player_a = animation_load(mlx, map, "./textures/bonus/Player_Stand.png", 4, 4);
+	map->image.player_run = animation_load(mlx, map, "./textures/bonus/Player_Run.png", 6, 4);
 	map->player.image = mlx_new_image(mlx, map->scale, map->scale);
 	//emeny image
 	map->image.enemy_a = animation_load(mlx, map, "./textures/bonus/enemy.png", 4, 4);
