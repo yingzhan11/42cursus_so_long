@@ -23,23 +23,28 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
 	{
 		map->next = (t_point){map->cur.x, map->cur.y - 1};
+		map->player.rows = 3;
 		player_move(map, map->player.image);
 	}
 	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
 	{
 		map->next = (t_point){map->cur.x, map->cur.y + 1};
+		map->player.rows = 0;
 		player_move(map, map->player.image);
 	}
 	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
 	{
 		map->next = (t_point){map->cur.x - 1, map->cur.y};
+		map->player.rows = 2;
 		player_move(map, map->player.image);
 	}
 	if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
 	{
 		map->next = (t_point){map->cur.x + 1, map->cur.y};
+		map->player.rows = 1;
 		player_move(map, map->player.image);
 	}
+	copy_anima_to_image(map->player.image, map->image.player_a, map->player.cols, map->player.rows);
 }
 
 //hook for resize the window

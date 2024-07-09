@@ -87,8 +87,6 @@ void	player_move(t_map *map, mlx_image_t *image)
 	}
 }
 
-
-
 void player_update(t_map *map, double newtime)
 {
     static int  cols = 0;
