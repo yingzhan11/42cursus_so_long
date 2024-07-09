@@ -25,8 +25,12 @@ _**enemy animation**_
 
 √ 1-add enemy animation, fly as time changes. cannt change dir now
 
-**TODO** 2-change dircetion. put enemy image in t_enemy, for each enemy. the full image for all animation in t_image. when enemy change dir, put_pixel from full enemy image in t_image.
+√ 2-改变敌人方向，change dircetion. put enemy image in t_enemy, for each enemy. the full image for all animation in t_image. when enemy change dir, put_pixel from full enemy image in t_image.
 
-_**TODO** **player animation**_
+_**player animation**_
+
+√ 1-玩家站立动画
+
+**TODO** 2-玩家移动动画，从此处移动到下一格，过程中动画
 
 ## Display the movement count directly on screen instead of writing it in the shell.
