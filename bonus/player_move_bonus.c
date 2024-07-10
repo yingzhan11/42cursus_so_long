@@ -12,6 +12,8 @@
 
 #include "so_long_bonus.h"
 
+
+
 //check the next position element, if it is wall '1', don''t move to
 static int	check_grid_next(t_map *map)
 {
@@ -53,34 +55,38 @@ static void	get_collect(t_map *map, t_image *image)
 		ft_printf("Found Fries: %d/%d\n", map->collect_get, map->collect_all);
 }
 
-/*void player_move_anima(t_map *map, mlx_image_t *image)
+void text_update(t_map *map)
 {
-	copy_anima_to_image(map->player.image, map->image.player_run, 0, 0);
-	map->player.cols = 0;
+	char *move;
+	//int i;
 
-	// Calculate movement step for smooth animation
-    int steps = 10; // Number of steps for smooth movement
-    int dx = map->next.x - map->cur.x;
-    int dy = map->next.y - map->cur.y;
-    float stepX = (float)dx / steps;
-    float stepY = (float)dy / steps;
-	// Perform smooth movement with animation update
-    for (int i = 0; i <= steps; ++i)
-    {
-        image->instances[0].x = (map->cur.x + stepX * i) * map->scale;
-        image->instances[0].y = (map->cur.y + stepY * i) * map->scale;
-		ft_printf("%d, %d\n", image->instances[0].x, image->instances[0].y);
-        // Update animation every step
-        player_update(map, 0.025); // Adjust timing for smooth animation
-		
-        // Redraw image
-        //image_draw(map->mlx, map);
-
-        // Wait or use a delay function to control animation speed
-        // You can use usleep or similar to add a slight delay if needed
-        usleep(50000); // 50ms delay
-    }
-}*/
+	move = ft_itoa(map->move);
+	if (map->image.text == NULL)
+	{
+		map->image.text_title = mlx_put_string(map->mlx, "Steps:", 32, 32);
+		//mlx_resize_image(map->image.text_title, map->image.text_title->width * map->text_scale, map->image.text_title->height * map->text_scale);
+		map->image.text = mlx_put_string(map->mlx, move, 96, 32);
+		//mlx_resize_image(map->image.text, map->image.text->width * map->text_scale, map->image.text->height * map->text_scale);
+		//i = map->image.text_title->width + map->image.text->width + 16;
+		//mlx_resize_image(map->image.text_box, i, 32);
+		free(move);
+		return ;
+	}
+	if (map->image.text2 != NULL)
+	{
+		mlx_delete_image(map->mlx, map->image.text2);
+		map->image.text2 = NULL;
+	}
+	mlx_delete_image(map->mlx, map->image.text);
+	map->image.text = mlx_put_string(map->mlx, move, 96, 32);
+	//mlx_resize_image(map->image.text, map->image.text->width * map->text_scale, map->image.text->height * map->text_scale);
+	/*if (map->image.text_title->width + map->image.text->width > map->image.text_box->width - 16)
+	{
+		i = map->image.text_title->width + map->image.text->width + 16;
+		mlx_resize_image(map->image.text_box, i, 32);
+	}*/
+	free(move);
+}
 
 /*func to move player and check collet and exit
 check next, if wall or not
@@ -92,6 +98,8 @@ void	player_move(t_map *map, mlx_image_t *image, int i)
 	if (check_grid_next(map) == 0)
 	{
 		map->p_state = 0;
+		if (map->image.text2 == NULL)
+			map->image.text2 = mlx_put_string(map->mlx, "No passage! You cannot enter the area ahead.", 200, 32);
 		return ;
 	}
 	//player_move_anima(map, image);
@@ -127,6 +135,7 @@ void	player_move(t_map *map, mlx_image_t *image, int i)
 		ft_printf("GAME OVER!\n");
 		quit_game(map);
 	}
+	text_update(map);
 }
 
 

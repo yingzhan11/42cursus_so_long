@@ -56,10 +56,12 @@ void	my_resizehook(int32_t width, int32_t height, void *param)
 {
 	t_map	*map;
 
+
 	map = (t_map *)param;
 	map->window_w = width;
 	map->window_h = height;
 	delete_image(map);
+
 	image_initialize(map->mlx, map);
 	image_draw(map->mlx, map);
 }

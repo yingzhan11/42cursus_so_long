@@ -21,6 +21,7 @@ static void	image_size(t_map *map)
 		map->scale = map->image.image_w;
 	else
 		map->scale = map->image.image_h;
+	//map->text_scale = map->scale / 24;
 }
 
 //load texture, convert texture to image, then delete texture and resize image
@@ -58,12 +59,17 @@ void	image_initialize(mlx_t *mlx, t_map *map)
 	map->image.empty = image_load(mlx, map, "./textures/bonus/empty.png");
 	map->image.wall = image_load(mlx, map, "./textures/bonus/wall.png");
 	map->image.collect = image_load(mlx, map, "./textures/bonus/collect.png");
-	map->image.exit1 = image_load(mlx, map, "./textures/bonus/exit1.png");
-	map->image.exit2 = image_load(mlx, map, "./textures/bonus/exit2.png");
+	map->image.exit1 = image_load(mlx, map, "./textures/bonus/exit_close.png");
+	map->image.exit2 = image_load(mlx, map, "./textures/bonus/exit_open.png");
 	map->image.start = image_load(mlx, map, "./textures/bonus/start.png");
+	
+	map->image.text_title = NULL;
+	map->image.text = NULL;
+	map->image.text2 = NULL;
+	//map->image.text_box = image_load(mlx, map, "./textures/bonus/textbox.png");
 
-	map->image.player_a = animation_load(mlx, map, "./textures/bonus/Player_Stand.png", 4, 4);
-	map->image.player_run = animation_load(mlx, map, "./textures/bonus/Player_Run.png", 6, 4);
+	map->image.player_a = animation_load(mlx, map, "./textures/bonus/player_stand.png", 4, 4);
+	map->image.player_run = animation_load(mlx, map, "./textures/bonus/player_run.png", 6, 4);
 	map->player.image = mlx_new_image(mlx, map->scale, map->scale);
 	//emeny image
 	map->image.enemy_a = animation_load(mlx, map, "./textures/bonus/enemy.png", 4, 4);

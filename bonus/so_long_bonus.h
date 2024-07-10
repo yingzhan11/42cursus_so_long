@@ -43,6 +43,10 @@ typedef struct s_image
 	mlx_image_t	*player_a;
 	mlx_image_t	*player_run;
 	mlx_image_t *enemy_a;
+	mlx_image_t *text_title;
+	mlx_image_t *text;
+	mlx_image_t *text2;
+	//mlx_image_t *text_box;
 }	t_image;
 
 typedef struct s_enemy
@@ -73,6 +77,7 @@ typedef struct s_map
 	int			window_w;
 	int			window_h;
 	int			scale;
+	//int			text_scale;
 	int			move;
 	int			empty_n;
 	int			collect_all;
@@ -118,5 +123,6 @@ void enemy_move(t_map *map);
 int check_enemy(t_map *map);
 void copy_anima_to_image(mlx_image_t *image, mlx_image_t *anima, uint32_t cols, uint32_t rows);
 void player_update(t_map *map, double newtime);
+void text_update(t_map *map);
 
 #endif
