@@ -1,6 +1,6 @@
 #include "so_long_bonus.h"
 
-void enemy_right_left(t_map *map, int i)
+static void enemy_right_left(t_map *map, int i)
 {
     t_point cur;
     t_point next;
@@ -34,13 +34,10 @@ void enemy_right_left(t_map *map, int i)
         map->enemy[i].pos = next;
     }
     if (map->enemy[i].pos.x == map->cur.x && map->enemy[i].pos.y == map->cur.y)
-    {
-        ft_printf("GAME OVER!\n");
-		quit_game(map);
-    }
+        quit_game(map, "GAME OVER!");
 }
 
-void enemy_down_up(t_map *map, int i)
+static void enemy_down_up(t_map *map, int i)
 {
     t_point cur;
     t_point next;
@@ -74,10 +71,7 @@ void enemy_down_up(t_map *map, int i)
         map->enemy[i].pos = next;
     }
     if (map->enemy[i].pos.x == map->cur.x && map->enemy[i].pos.y == map->cur.y)
-    {
-        ft_printf("GAME OVER!\n");
-		quit_game(map);
-    }
+		quit_game(map, "GAME OVER!");
 }
 
 void enemy_move(t_map *map)

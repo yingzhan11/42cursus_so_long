@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 17:05:31 by yzhan             #+#    #+#             */
-/*   Updated: 2024/07/04 09:44:50 by yzhan            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
@@ -23,6 +12,7 @@
 # include <stdint.h>
 
 # define ELEMENTS "01PECHV"
+# define MOVEKEY "WASD"
 
 typedef struct s_point
 {
@@ -99,30 +89,43 @@ typedef struct s_map
 	t_point		next;
 }	t_map;
 
+//map functions
 void	map_initialize(t_map *map, char *filename);
 int		check_elements(t_map *map);
 int		check_shape(t_map *map);
 int		check_wall(t_map *map);
-int		find_path(t_map *map, t_point cur, char **matrix);
+int check_enemy(t_map *map);
 int		check_path(t_map *map);
+
+//image functions
 void	image_initialize(mlx_t *mlx, t_map *map);
 void	image_draw(mlx_t *mlx, t_map *map);
+
+//my hook
 void	my_keyhook(mlx_key_data_t keydata, void *param);
 void	my_resizehook(int32_t width, int32_t height, void *param);
 void	my_closehook(void *param);
+void my_updatehook(void *param);
+
+//update animation
+void enemy_update(t_map *map, double time);
+void player_update(t_map *map, double newtime);
+
+//move functions
+void enemy_move(t_map *map);
 void	player_move(t_map *map, mlx_image_t *image,int i);
-void	error_info(t_map *map, char *message);
-void	quit_game(t_map *map);
+
+//tools-animation
+void copy_anima_to_image(mlx_image_t *image, mlx_image_t *anima, uint32_t cols, uint32_t rows);
+
+//tools-quit, delete
 void	delete_map(t_map *map);
 void	delete_image(t_map *map);
 void	delete_matrix(char **matrix, int i);
 
-void my_updatehook(void *param);
-void enemy_update(t_map *map, double time);
-void enemy_move(t_map *map);
-int check_enemy(t_map *map);
-void copy_anima_to_image(mlx_image_t *image, mlx_image_t *anima, uint32_t cols, uint32_t rows);
-void player_update(t_map *map, double newtime);
+//tools-text, error infor
+void	error_info(t_map *map, char *message);
 void text_update(t_map *map);
+void	quit_game(t_map *map, char *message);
 
 #endif

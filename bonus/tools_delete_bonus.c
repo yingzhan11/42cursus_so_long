@@ -1,18 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tools.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 12:03:40 by yzhan             #+#    #+#             */
-/*   Updated: 2024/07/04 12:06:20 by yzhan            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
-void	delete_image(t_map *map)
+void delete_enemy(t_map *map)
 {
 	int i;
 
@@ -23,9 +12,10 @@ void	delete_image(t_map *map)
 			mlx_delete_image(map->mlx, map->enemy[i].image);
 		i++;
 	}
-	if (map->player.image)
-		mlx_delete_image(map->mlx, map->player.image);
-	
+}
+
+void	delete_image(t_map *map)
+{
 	if (map->image.empty)
 		mlx_delete_image(map->mlx, map->image.empty);
 	if (map->image.wall)
@@ -71,6 +61,10 @@ void	delete_map(t_map *map)
 {
 	if (!map)
 		return ;
+	if (map->enemy)
+		delete_enemy(map);
+	if (map->player.image)
+		mlx_delete_image(map->mlx, map->player.image);
 	delete_image(map);
 	if (map->grid)
 		delete_matrix(map->grid, map->rows);
@@ -80,16 +74,3 @@ void	delete_map(t_map *map)
 		mlx_terminate(map->mlx);
 }
 
-void	quit_game(t_map *map)
-{
-	if (map)
-		delete_map(map);
-	exit(EXIT_SUCCESS);
-}
-
-void	error_info(t_map *map, char *message)
-{
-	delete_map(map);
-	ft_printf("Error: %s\n", message);
-	exit(EXIT_FAILURE);
-}

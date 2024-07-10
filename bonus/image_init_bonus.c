@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   image_init.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 12:09:49 by yzhan             #+#    #+#             */
-/*   Updated: 2024/07/04 12:09:52 by yzhan            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
@@ -38,7 +27,7 @@ static mlx_image_t	*image_load(mlx_t *mlx, t_map *map, const char *path)
 }
 
 
-mlx_image_t *animation_load(mlx_t *mlx, t_map *map, const char *path, int cols, int rows)
+static mlx_image_t *animation_load(mlx_t *mlx, t_map *map, const char *path, int cols, int rows)
 {	
 	mlx_texture_t	*texture;
 	mlx_image_t	*anima;
@@ -55,6 +44,8 @@ mlx_image_t *animation_load(mlx_t *mlx, t_map *map, const char *path, int cols, 
 //calculate image size & load image
 void	image_initialize(mlx_t *mlx, t_map *map)
 {
+	int i;
+
 	image_size(map);
 	map->image.empty = image_load(mlx, map, "./textures/bonus/empty.png");
 	map->image.wall = image_load(mlx, map, "./textures/bonus/wall.png");
@@ -62,23 +53,14 @@ void	image_initialize(mlx_t *mlx, t_map *map)
 	map->image.exit1 = image_load(mlx, map, "./textures/bonus/exit_close.png");
 	map->image.exit2 = image_load(mlx, map, "./textures/bonus/exit_open.png");
 	map->image.start = image_load(mlx, map, "./textures/bonus/start.png");
-	
 	map->image.text_title = NULL;
 	map->image.text = NULL;
 	map->image.text2 = NULL;
-	//map->image.text_box = image_load(mlx, map, "./textures/bonus/textbox.png");
-
 	map->image.player_a = animation_load(mlx, map, "./textures/bonus/player_stand.png", 4, 4);
 	map->image.player_run = animation_load(mlx, map, "./textures/bonus/player_run.png", 6, 4);
 	map->player.image = mlx_new_image(mlx, map->scale, map->scale);
-	//emeny image
 	map->image.enemy_a = animation_load(mlx, map, "./textures/bonus/enemy.png", 4, 4);
-	int i = 0;
-	while (i < map->enemy_n)
-	{
+	i = -1;
+	while (++i < map->enemy_n)
 		map->enemy[i].image = mlx_new_image(mlx, map->scale, map->scale);
-		i++;
-	}
-	
-	
 }

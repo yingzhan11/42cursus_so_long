@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   image_draw.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 09:52:24 by yzhan             #+#    #+#             */
-/*   Updated: 2024/07/04 10:18:44 by yzhan            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
@@ -35,9 +24,7 @@ static void	draw_map(mlx_t *mlx, t_map *map, t_image *image, t_point cur)
 		mlx_image_to_window(mlx, image->exit2, cur.x * scale, cur.y * scale);
 }
 
-
-
-void draw_enemy(mlx_t *mlx, t_map *map, t_image *image, t_enemy *enemy)
+static void draw_enemy(mlx_t *mlx, t_map *map, t_image *image, t_enemy *enemy)
 {
 	int i;
 	int	x;
@@ -85,10 +72,7 @@ void	image_draw(mlx_t *mlx, t_map *map)
 	x = map->cur.x;
 	y = map->cur.y;
 	copy_anima_to_image(map->player.image, map->image.player_a, map->player.cols, map->player.rows);
-	
 	mlx_image_to_window(mlx, map->player.image, x * map->scale, y * map->scale);
-
-	
 	//mlx_image_to_window(map->mlx, map->image.text_box, 28, 28);
 	text_update(map);
 }

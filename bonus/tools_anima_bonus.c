@@ -1,11 +1,11 @@
 #include "so_long_bonus.h"
 
-int get_rgba(int r, int g, int b, int a)
+static int get_rgba(int r, int g, int b, int a)
 {
     return (r << 24 | g << 16 | b << 8 | a);
 }
 
-uint32_t get_pixel(mlx_image_t *image, uint32_t x, uint32_t y)
+static uint32_t get_pixel(mlx_image_t *image, uint32_t x, uint32_t y)
 {
     uint8_t *color;
 

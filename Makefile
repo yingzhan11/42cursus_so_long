@@ -13,7 +13,10 @@ SRCS	= main.c map_init.c map_check.c image_init.c image_draw.c hook.c player_mov
 OBJS	= $(SRCS:.c=.o)
 
 BONUS_DIR = bonus
-BONUS_SRCS = main_bonus.c map_init_bonus.c map_check_bonus.c image_init_bonus.c image_draw_bonus.c hook_bonus.c player_move_bonus.c tools_bonus.c tools_anima_bonus.c enemy_update_bonus.c enemy_move_bonus.c
+BONUS_SRCS = main_bonus.c map_init_bonus.c map_check_bonus.c path_check_bonus.c \
+				image_init_bonus.c image_draw_bonus.c hook_bonus.c update_bonus.c \
+				player_move_bonus.c enemy_move_bonus.c \
+				tools_anima_bonus.c tools_delete_bonus.c tools_text_bonus.c
 BONUS_OBJS = $(addprefix $(BONUS_DIR)/, $(BONUS_SRCS:.c=.o))
 
 all: clone $(NAME)

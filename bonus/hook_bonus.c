@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   hook.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 09:46:10 by yzhan             #+#    #+#             */
-/*   Updated: 2024/07/04 09:51:40 by yzhan            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
@@ -19,34 +8,30 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 
 	map = (t_map *)param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		quit_game(map);
-	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS && map->p_state == 0)
+		quit_game(map, "Quit game.");
+	if (ft_strchr(MOVEKEY, keydata.key) && keydata.action == MLX_PRESS && map->p_state == 0)
 	{
-		map->next = (t_point){map->cur.x, map->cur.y - 1};
-		map->player.rows = 3;
 		map->p_state = 1;
-		//player_move(map, map->player.image);
-	}
-	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS && map->p_state == 0)
-	{
-		map->next = (t_point){map->cur.x, map->cur.y + 1};
-		map->player.rows = 0;
-		map->p_state = 1;
-		//player_move(map, map->player.image);
-	}
-	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS && map->p_state == 0)
-	{
-		map->next = (t_point){map->cur.x - 1, map->cur.y};
-		map->player.rows = 2;
-		map->p_state = 1;
-		//player_move(map, map->player.image);
-	}
-	if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS && map->p_state == 0)
-	{
-		map->next = (t_point){map->cur.x + 1, map->cur.y};
-		map->player.rows = 1;
-		map->p_state = 1;
-		//player_move(map, map->player.image);
+		if (keydata.key == MLX_KEY_W)
+		{
+			map->next = (t_point){map->cur.x, map->cur.y - 1};
+			map->player.rows = 3;
+		}
+		if (keydata.key == MLX_KEY_S)
+		{
+			map->next = (t_point){map->cur.x, map->cur.y + 1};
+			map->player.rows = 0;
+		}
+		if (keydata.key == MLX_KEY_A)
+		{
+			map->next = (t_point){map->cur.x - 1, map->cur.y};
+			map->player.rows = 2;
+		}
+		if (keydata.key == MLX_KEY_D)
+		{
+			map->next = (t_point){map->cur.x + 1, map->cur.y};
+			map->player.rows = 1;
+		}
 	}
 	copy_anima_to_image(map->player.image, map->image.player_a, map->player.cols, map->player.rows);
 }
@@ -76,7 +61,8 @@ void	my_closehook(void *param)
 	exit(EXIT_SUCCESS);
 }
 
-void my_updatehook(void *param)
+//hook for close the window
+void	my_updatehook(void *param)
 {
 	t_map *map;
 	

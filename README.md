@@ -36,6 +36,16 @@ _**player animation**_
 
 **TODO** 4-代码整理+优化
 
-## TODO: Display the movement count directly on screen instead of writing it in the shell.
+## Display the movement count directly on screen instead of writing it in the shell.
 
-**TODO** 1-memroy check. 2-attach
+√ 1-显示步数
+
+**TODO** 2-文字大小根据窗口大小变化，可以用mlx_resize_image()函数，但目前窗口太小时，不起作用，是尺寸传值有问题，待解决
+
+**TODO** 1-memroy check. 
+
+## Future
+
+1-在文字下面增加文本框image，已做 √，**TODO** 但尺寸调整需要完善，可能会考虑去掉这个功能，以后再做
+
+2-玩家攻击 attach
