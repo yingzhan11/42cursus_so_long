@@ -8,7 +8,7 @@
 
 √ 2-检查敌人密度check denisty: (number of enemy * 100) / (empty + collect + 2)
 
-**TODO** 3-path: 有点困难，没想好，可能用穷举法，但这样太慢了，暂时没想到更高效的方法
+**TODO** 3-path: 有点困难，没想好，可能用穷举法，但这样太慢了，暂时没想到更高效的方法 **有问题，huge map会显示没有valid路线，但是用manda版本是有路线的，large也有，解决了，但huge仍然有这个问题，没发现是哪里的问题。
 
 √ 4-load enemy image
 
