@@ -30,28 +30,26 @@ typedef struct s_image
 	mlx_image_t	*exit1;
 	mlx_image_t	*exit2;
 	mlx_image_t	*start;
-	mlx_image_t	*player_a;
+	mlx_image_t	*player_std;
 	mlx_image_t	*player_run;
-	mlx_image_t *enemy_a;
+	mlx_image_t *enemy_fly;
 	mlx_image_t *text_title;
-	mlx_image_t *text;
-	mlx_image_t *text2;
-	//mlx_image_t *text_box;
+	mlx_image_t *text_move;
+	mlx_image_t *text_info;
 }	t_image;
 
 typedef struct s_enemy
 {
+	mlx_image_t *image;
 	char	type;
 	char	dir; //dirction
 	t_point	pos; //position
-	mlx_image_t *image;
 	int	cols;
 	int	rows;
 } t_enemy;
 
 typedef struct s_player
 {
-	char	dir; //dirction
 	mlx_image_t *image;
 	int	cols;
 	int	rows;
@@ -69,20 +67,16 @@ typedef struct s_map
 	int			scale;
 	//int			text_scale;
 	int			move;
-	int			empty_n;
 	int			collect_all;
 	int			collect_get;
 	int			exit_n;
-	int			player_n;
 	t_player	player;
+	int			player_n;
 	int 		p_state;
-	//enemy
-	int			enemy_n;
-	int			enemy_den; //density
 	t_enemy		*enemy;
-
+	int			enemy_n;
 	double		time;
-	
+	char		*info;
 	t_point		exit;
 	t_point		start;
 	t_point		cur;
@@ -94,7 +88,8 @@ void	map_initialize(t_map *map, char *filename);
 int		check_elements(t_map *map);
 int		check_shape(t_map *map);
 int		check_wall(t_map *map);
-int check_enemy(t_map *map);
+void get_player_position(t_map *map);
+void get_enemy_path(t_map *map);
 int		check_path(t_map *map);
 
 //image functions
@@ -116,16 +111,18 @@ void enemy_move(t_map *map);
 void	player_move(t_map *map, mlx_image_t *image,int i);
 
 //tools-animation
-void copy_anima_to_image(mlx_image_t *image, mlx_image_t *anima, uint32_t cols, uint32_t rows);
+void anima_to_image(mlx_image_t *image, mlx_image_t *anima, uint32_t cols, uint32_t rows);
 
 //tools-quit, delete
 void	delete_map(t_map *map);
+void delete_enemy(t_map *map);
 void	delete_image(t_map *map);
 void	delete_matrix(char **matrix, int i);
 
 //tools-text, error infor
 void	error_info(t_map *map, char *message);
-void text_update(t_map *map);
+void put_text_move(t_map *map);
+void put_text_info(t_map *map, char *info);
 void	quit_game(t_map *map, char *message);
 
 #endif

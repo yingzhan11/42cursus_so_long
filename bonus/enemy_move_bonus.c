@@ -1,29 +1,17 @@
 #include "so_long_bonus.h"
 
-static void enemy_right_left(t_map *map, int i)
+static void enemy_go_right(t_map *map, int i)
 {
     t_point cur;
     t_point next;
 
     cur = map->enemy[i].pos;
-    if (map->enemy[i].dir == 'r')
-        next = (t_point){cur.x + 1, cur.y};
-    else if (map->enemy[i].dir == 'l')
-        next = (t_point){cur.x - 1, cur.y};
+    next = (t_point){cur.x + 1, cur.y};
     if (map->grid[next.y][next.x] == '1' || map->grid[next.y][next.x] == 'C' || map->grid[next.y][next.x] == 'V')
     {
-        if (map->enemy[i].dir == 'r')
-        {
-            map->enemy[i].dir = 'l';
-			map->enemy[i].rows = 1;
-            copy_anima_to_image(map->enemy[i].image, map->image.enemy_a, 0, 1);
-        }
-        else if (map->enemy[i].dir == 'l')
-        {
-            map->enemy[i].dir = 'r';
-			map->enemy[i].rows = 0;
-            copy_anima_to_image(map->enemy[i].image, map->image.enemy_a, 0, 0);
-        }
+        map->enemy[i].dir = 'l';
+		map->enemy[i].rows = 1;
+        anima_to_image(map->enemy[i].image, map->image.enemy_fly, 0, 1);
     }
     else
     {
@@ -31,36 +19,49 @@ static void enemy_right_left(t_map *map, int i)
 	    map->enemy[i].image->instances[0].y = next.y * map->scale;
         map->grid[cur.y][cur.x] = '0';
         map->grid[next.y][next.x] = 'H';
-        map->enemy[i].pos = next;
+        map->enemy[i].pos = (t_point){next.x, next.y};
     }
     if (map->enemy[i].pos.x == map->cur.x && map->enemy[i].pos.y == map->cur.y)
         quit_game(map, "GAME OVER!");
 }
 
-static void enemy_down_up(t_map *map, int i)
+static void enemy_go_left(t_map *map, int i)
 {
     t_point cur;
     t_point next;
 
     cur = map->enemy[i].pos;
-    if (map->enemy[i].dir == 'd')
-        next = (t_point){cur.x, cur.y + 1};
-    else if (map->enemy[i].dir == 'u')
-        next = (t_point){cur.x, cur.y - 1};
+    next = (t_point){cur.x - 1, cur.y};
+    if (map->grid[next.y][next.x] == '1' || map->grid[next.y][next.x] == 'C' || map->grid[next.y][next.x] == 'V')
+    {
+        map->enemy[i].dir = 'r';
+		map->enemy[i].rows = 0;
+        anima_to_image(map->enemy[i].image, map->image.enemy_fly, 0, 0);
+    }
+    else
+    {
+        map->enemy[i].image->instances[0].x = next.x * map->scale;
+	    map->enemy[i].image->instances[0].y = next.y * map->scale;
+        map->grid[cur.y][cur.x] = '0';
+        map->grid[next.y][next.x] = 'H';
+        map->enemy[i].pos = (t_point){next.x, next.y};
+    }
+    if (map->enemy[i].pos.x == map->cur.x && map->enemy[i].pos.y == map->cur.y)
+        quit_game(map, "GAME OVER!");
+}
+
+static void enemy_go_down(t_map *map, int i)
+{
+    t_point cur;
+    t_point next;
+
+    cur = map->enemy[i].pos;
+    next = (t_point){cur.x, cur.y + 1};
     if (map->grid[next.y][next.x] == '1' || map->grid[next.y][next.x] == 'C' || map->grid[next.y][next.x] == 'H')
     {
-        if (map->enemy[i].dir == 'd')
-        {
-            map->enemy[i].dir = 'u';
-            map->enemy[i].rows = 3;
-            copy_anima_to_image(map->enemy[i].image, map->image.enemy_a, 0, 3);
-        }
-        else if (map->enemy[i].dir == 'u')
-        {
-            map->enemy[i].dir = 'd';
-            map->enemy[i].rows = 2;
-            copy_anima_to_image(map->enemy[i].image, map->image.enemy_a, 0, 2);
-        }
+        map->enemy[i].dir = 'u';
+        map->enemy[i].rows = 3;
+        anima_to_image(map->enemy[i].image, map->image.enemy_fly, 0, 3);
     }
     else
     {
@@ -68,7 +69,32 @@ static void enemy_down_up(t_map *map, int i)
 	    map->enemy[i].image->instances[0].y = next.y * map->scale;
         map->grid[cur.y][cur.x] = '0';
         map->grid[next.y][next.x] = 'V';
-        map->enemy[i].pos = next;
+        map->enemy[i].pos = (t_point){next.x, next.y};
+    }
+    if (map->enemy[i].pos.x == map->cur.x && map->enemy[i].pos.y == map->cur.y)
+		quit_game(map, "GAME OVER!");
+}
+
+static void enemy_go_up(t_map *map, int i)
+{
+    t_point cur;
+    t_point next;
+
+    cur = map->enemy[i].pos;
+    next = (t_point){cur.x, cur.y - 1};
+    if (map->grid[next.y][next.x] == '1' || map->grid[next.y][next.x] == 'C' || map->grid[next.y][next.x] == 'H')
+    {
+        map->enemy[i].dir = 'd';
+        map->enemy[i].rows = 2;
+        anima_to_image(map->enemy[i].image, map->image.enemy_fly, 0, 2);
+    }
+    else
+    {
+        map->enemy[i].image->instances[0].x = next.x * map->scale;
+	    map->enemy[i].image->instances[0].y = next.y * map->scale;
+        map->grid[cur.y][cur.x] = '0';
+        map->grid[next.y][next.x] = 'V';
+        map->enemy[i].pos = (t_point){next.x, next.y};
     }
     if (map->enemy[i].pos.x == map->cur.x && map->enemy[i].pos.y == map->cur.y)
 		quit_game(map, "GAME OVER!");
@@ -81,10 +107,14 @@ void enemy_move(t_map *map)
     i = 0;
     while (i < map->enemy_n)
     {
-        if (map->enemy[i].type == 'H')
-            enemy_right_left(map, i);
-        else if (map->enemy[i].type == 'V')
-            enemy_down_up(map, i);
+        if (map->enemy[i].dir == 'r')
+            enemy_go_right(map, i);
+        else if (map->enemy[i].dir == 'l')
+            enemy_go_left(map, i);
+        else if (map->enemy[i].dir == 'd')
+            enemy_go_down(map, i);
+        else if (map->enemy[i].dir == 'u')
+            enemy_go_up(map, i);
         i++;
     }
 }

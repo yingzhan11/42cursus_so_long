@@ -43,7 +43,7 @@ static void draw_enemy(mlx_t *mlx, t_map *map, t_image *image, t_enemy *enemy)
 			enemy[i].rows = 2;
 		if (enemy[i].type == 'V' && enemy[i].dir == 'u')
 			enemy[i].rows = 3;
-		copy_anima_to_image(enemy[i].image, image->enemy_a, enemy[i].cols, enemy[i].rows);
+		anima_to_image(enemy[i].image, image->enemy_fly, enemy[i].cols, enemy[i].rows);
 		mlx_image_to_window(mlx, enemy[i].image, x * map->scale, y * map->scale);
 		i++;
 	}
@@ -66,13 +66,12 @@ void	image_draw(mlx_t *mlx, t_map *map)
 		}
 		y++;
 	}
-	//draw enemy
 	draw_enemy(mlx, map, &map->image, map->enemy);
-	//draw player
 	x = map->cur.x;
 	y = map->cur.y;
-	copy_anima_to_image(map->player.image, map->image.player_a, map->player.cols, map->player.rows);
+	anima_to_image(map->player.image, map->image.player_std, map->player.cols, map->player.rows);
 	mlx_image_to_window(mlx, map->player.image, x * map->scale, y * map->scale);
-	//mlx_image_to_window(map->mlx, map->image.text_box, 28, 28);
-	text_update(map);
+	put_text_move(map);
+	if (map->info)
+		put_text_info(map, map->info);
 }

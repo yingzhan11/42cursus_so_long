@@ -1,31 +1,35 @@
 #include "so_long_bonus.h"
 
-void text_update(t_map *map)
+void put_text_move(t_map *map)
 {
 	char *move;
-	//int i;
 
 	move = ft_itoa(map->move);
-	if (map->image.text == NULL)
+	if (map->image.text_move == NULL)
 	{
 		map->image.text_title = mlx_put_string(map->mlx, "Steps:", 32, 32);
-		//mlx_resize_image(map->image.text_title, map->image.text_title->width * map->text_scale, map->image.text_title->height * map->text_scale);
-		map->image.text = mlx_put_string(map->mlx, move, 96, 32);
-		//mlx_resize_image(map->image.text, map->image.text->width * map->text_scale, map->image.text->height * map->text_scale);
+		map->image.text_move = mlx_put_string(map->mlx, move, 96, 32);
+		//mlx_resize_image(map->image.text_move, width, height);
 		free(move);
 		return ;
 	}
-	if (map->image.text2 != NULL)
+	if (map->image.text_info != NULL && map->p_state == 1)
 	{
-		mlx_delete_image(map->mlx, map->image.text2);
-		map->image.text2 = NULL;
+		mlx_delete_image(map->mlx, map->image.text_info);
+		map->info = NULL;
 	}
-	mlx_delete_image(map->mlx, map->image.text);
-	map->image.text = mlx_put_string(map->mlx, move, 96, 32);
-	//mlx_resize_image(map->image.text, map->image.text->width * map->text_scale, map->image.text->height * map->text_scale);
+	mlx_delete_image(map->mlx, map->image.text_move);
+	map->image.text_move = mlx_put_string(map->mlx, move, 96, 32);
 	free(move);
 }
 
+void put_text_info(t_map *map, char *info)
+{
+	if (map->image.text_info != NULL)
+		mlx_delete_image(map->mlx, map->image.text_info);
+	if (info)
+		map->image.text_info = mlx_put_string(map->mlx, info, 32, 52);
+}
 
 void	error_info(t_map *map, char *message)
 {

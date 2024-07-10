@@ -53,13 +53,13 @@ void	image_initialize(mlx_t *mlx, t_map *map)
 	map->image.exit1 = image_load(mlx, map, "./textures/bonus/exit_close.png");
 	map->image.exit2 = image_load(mlx, map, "./textures/bonus/exit_open.png");
 	map->image.start = image_load(mlx, map, "./textures/bonus/start.png");
-	map->image.text_title = NULL;
-	map->image.text = NULL;
-	map->image.text2 = NULL;
-	map->image.player_a = animation_load(mlx, map, "./textures/bonus/player_stand.png", 4, 4);
+	map->image.player_std = animation_load(mlx, map, "./textures/bonus/player_stand.png", 4, 4);
 	map->image.player_run = animation_load(mlx, map, "./textures/bonus/player_run.png", 6, 4);
+	map->image.text_title = NULL;
+	map->image.text_move = NULL;
+	map->image.text_info = NULL;
 	map->player.image = mlx_new_image(mlx, map->scale, map->scale);
-	map->image.enemy_a = animation_load(mlx, map, "./textures/bonus/enemy.png", 4, 4);
+	map->image.enemy_fly = animation_load(mlx, map, "./textures/bonus/enemy.png", 4, 4);
 	i = -1;
 	while (++i < map->enemy_n)
 		map->enemy[i].image = mlx_new_image(mlx, map->scale, map->scale);

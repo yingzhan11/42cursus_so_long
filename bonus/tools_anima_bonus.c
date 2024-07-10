@@ -15,7 +15,7 @@ static uint32_t get_pixel(mlx_image_t *image, uint32_t x, uint32_t y)
     return (get_rgba(*(color), *(color + 1), *(color + 2), *(color + 3)));
 }
 
-void copy_anima_to_image(mlx_image_t *image, mlx_image_t *anima, uint32_t cols, uint32_t rows)
+void anima_to_image(mlx_image_t *image, mlx_image_t *anima, uint32_t cols, uint32_t rows)
 {
 	uint32_t x;
 	uint32_t y;

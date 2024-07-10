@@ -44,69 +44,81 @@ int	check_wall(t_map *map)
 //check map elements, only '01CEP' is valid, and only one 'EPC' is valid
 int	check_elements(t_map *map)
 {
-	int	y;
-	int	x;
+	t_point p;
 
-	y = -1;
-	while (++y < map->rows)
+	p.y = 0;
+	while (p.y < map->rows)
 	{
-		x = -1;
-		while (++x < map->cols)
+		p.x = 0;
+		while (p.x < map->cols)
 		{
-			if (!ft_strchr(ELEMENTS, map->grid[y][x]))
+			if (!ft_strchr(ELEMENTS, map->grid[p.y][p.x]))
 				return (0);
-			if (map->grid[y][x] == 'P')
-			{
-				map->start = (t_point){x, y};
+			if (map->grid[p.y][p.x] == 'P')
 				map->player_n++;
-			}
-			else if (map->grid[y][x] == 'E')
+			else if (map->grid[p.y][p.x] == 'E')
 				map->exit_n++;
-			else if (map->grid[y][x] == 'C')
+			else if (map->grid[p.y][p.x] == 'C')
 				map->collect_all++;
-			else if (map->grid[y][x] == 'H' || map->grid[y][x] == 'V')
+			else if (map->grid[p.y][p.x] == 'H' || map->grid[p.y][p.x] == 'V')
 				map->enemy_n++;
-			else if (map->grid[y][x] == '0')
-				map->empty_n++;
+			p.x++;
 		}
+		p.y++;
 	}
-	map->empty_n = map->empty_n + map->collect_all + 2;
 	if (map->player_n == 1 && map->exit_n == 1 && map->collect_all >= 1)
 		return (1);
 	return (0);
 }
 
-int check_enemy(t_map *map)
+void get_player_position(t_map *map)
 {
-	int	y;
-	int x;
+	t_point p;
+
+	p.y = 0;
+	while (p.y < map->rows)
+	{
+		p.x = 0;
+		while (++p.x < map->cols)
+		{
+			if (map->grid[p.y][p.x] == 'P')
+			{
+				map->start = (t_point){p.x, p.y};
+				return ;
+			}
+			p.x++;
+		}
+		p.y++;
+	}
+
+}
+
+void get_enemy_path(t_map *map)
+{
+	t_point p;
 	int i;
 
 	map->enemy = malloc(map->enemy_n * sizeof(t_enemy));
 	if (!map->enemy)
 		error_info(map, "Failed to get enemy positions.");
-	y = -1;
+	p.y = -1;
 	i = 0;
-	while (++y < map->rows)
+	while (++p.y < map->rows && i < map->enemy_n)
 	{
-		x = -1;
-		while (++x < map->cols)
+		p.x = -1;
+		while (++p.x < map->cols)
 		{
-			if (map->grid[y][x] == 'H' || (map->grid[y][x] == 'V'))
+			if (map->grid[p.y][p.x] == 'H' || (map->grid[p.y][p.x] == 'V'))
 			{
-				map->enemy[i].type = map->grid[y][x];
-				map->enemy[i].pos = (t_point){x, y};
-				if (map->grid[y][x] == 'H')
+				map->enemy[i].type = map->grid[p.y][p.x];
+				map->enemy[i].pos = (t_point){p.x, p.y};
+				if (map->grid[p.y][p.x] == 'H')
 					map->enemy[i].dir = 'r';
-				if (map->grid[y][x] == 'V')
+				if (map->grid[p.y][p.x] == 'V')
 					map->enemy[i].dir = 'd';
 				i++;
 			}
 		}
 	}
-	map->enemy_den = map->enemy_n * 100 / map->empty_n;
-	if (map->enemy_den > 5)
-		return (0);
-	return (1);
 }
 

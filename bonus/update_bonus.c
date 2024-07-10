@@ -7,7 +7,7 @@ static void enemy_animation(t_map *map, int cols)
     i = 0;
     while (i < map->enemy_n)
     {
-        copy_anima_to_image(map->enemy[i].image, map->image.enemy_a, cols, map->enemy[i].rows);
+        anima_to_image(map->enemy[i].image, map->image.enemy_fly, cols, map->enemy[i].rows);
         i++;
     }
 }
@@ -46,7 +46,7 @@ void    player_update(t_map *map, double newtime)
     {
         if (cols >= 4)
 			cols = 0;
-		copy_anima_to_image(map->player.image, map->image.player_a, cols, map->player.rows);
+		anima_to_image(map->player.image, map->image.player_std, cols, map->player.rows);
         cols++;
         flytime -= 0.25;
     }
@@ -57,7 +57,7 @@ void    player_update(t_map *map, double newtime)
 			cols_r = 0;
 		}
 		player_move(map, map->player.image, cols_r);
-		copy_anima_to_image(map->player.image, map->image.player_run, cols_r, map->player.rows);
+		anima_to_image(map->player.image, map->image.player_run, cols_r, map->player.rows);
 		cols_r++;
 		flytime -= 0.05;
 	}

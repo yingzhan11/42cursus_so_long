@@ -28,18 +28,18 @@ void	delete_image(t_map *map)
 		mlx_delete_image(map->mlx, map->image.exit2);
 	if (map->image.start)
 		mlx_delete_image(map->mlx, map->image.start);
-	if (map->image.player_a)
-		mlx_delete_image(map->mlx, map->image.player_a);
+	if (map->image.player_std)
+		mlx_delete_image(map->mlx, map->image.player_std);
 	if (map->image.player_run)
 		mlx_delete_image(map->mlx, map->image.player_run);
-	if (map->image.enemy_a)
-		mlx_delete_image(map->mlx, map->image.enemy_a);
+	if (map->image.enemy_fly)
+		mlx_delete_image(map->mlx, map->image.enemy_fly);
 	if (map->image.text_title)
 		mlx_delete_image(map->mlx, map->image.text_title);
-	if (map->image.text)
-		mlx_delete_image(map->mlx, map->image.text);
-	if (map->image.text2)
-		mlx_delete_image(map->mlx, map->image.text2);
+	if (map->image.text_move)
+		mlx_delete_image(map->mlx, map->image.text_move);
+	if (map->image.text_info)
+		mlx_delete_image(map->mlx, map->image.text_info);
 }
 
 void	delete_matrix(char **matrix, int i)
