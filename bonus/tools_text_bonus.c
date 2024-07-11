@@ -1,15 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools_text_bonus.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/11 16:51:13 by yzhan             #+#    #+#             */
+/*   Updated: 2024/07/11 16:51:54 by yzhan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long_bonus.h"
 
-void put_text_move(t_map *map)
+void	put_text_move(t_map *map)
 {
-	char *move;
+	char	*move;
 
 	move = ft_itoa(map->move);
 	if (map->image.text_move == NULL)
 	{
 		map->image.text_title = mlx_put_string(map->mlx, "Steps:", 32, 32);
 		map->image.text_move = mlx_put_string(map->mlx, move, 96, 32);
-		//mlx_resize_image(map->image.text_move, width, height);
 		free(move);
 		return ;
 	}
@@ -23,7 +34,7 @@ void put_text_move(t_map *map)
 	free(move);
 }
 
-void put_text_info(t_map *map, char *info)
+void	put_text_info(t_map *map, char *info)
 {
 	if (map->image.text_info != NULL)
 		mlx_delete_image(map->mlx, map->image.text_info);

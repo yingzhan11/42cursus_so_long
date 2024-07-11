@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player_move_bonus.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/11 16:09:22 by yzhan             #+#    #+#             */
+/*   Updated: 2024/07/11 16:14:15 by yzhan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
@@ -45,23 +56,8 @@ static void	get_collect(t_map *map, t_image *image)
 	put_text_info(map, map->info);
 }
 
-/*func to move player and check collet and exit
-check next, if wall or not
-then change the current coord and check collect num and exit*/
-void	player_move(t_map *map, mlx_image_t *image, int i)
+static void	check_cur_grid(t_map *map)
 {
-	if (check_grid_next(map) == 0)
-		return ;
-	int x = (map->next.x - map->cur.x) * (map->scale / 6) * (i + 1);
-	int y = (map->next.y - map->cur.y) * (map->scale / 6) * (i + 1);
-	image->instances[0].x = (map->cur.x * map->scale) + x;
-	image->instances[0].y = (map->cur.y * map->scale) + y;
-	if (i < 5)
-		return ;
-	map->move++;
-	map->cur = map->next;
-	put_text_move(map);
-	map->p_state = 0;
 	if (map->grid[map->cur.y][map->cur.x] == 'C')
 		get_collect(map, &map->image);
 	if (map->grid[map->cur.y][map->cur.x] == 'E')
@@ -71,9 +67,29 @@ void	player_move(t_map *map, mlx_image_t *image, int i)
 	}
 	if (map->grid[map->cur.y][map->cur.x] == 'e')
 		quit_game(map, "YOU WIN! \\^o^/");
-	if (map->grid[map->cur.y][map->cur.x] == 'H' || map->grid[map->cur.y][map->cur.x] == 'V')
+	if (map->grid[map->cur.y][map->cur.x] == 'H'
+		|| map->grid[map->cur.y][map->cur.x] == 'V')
 		quit_game(map, "GAME OVER! 〒▽〒");
 }
 
+/*func to move player and check collet and exit
+check next, if wall or not
+then change the current coord and check collect num and exit*/
+void	player_move(t_map *map, mlx_image_t *image, int i)
+{
+	t_point	m;
 
-
+	if (check_grid_next(map) == 0)
+		return ;
+	m.x = (map->next.x - map->cur.x) * (map->scale / 6) * (i + 1);
+	m.y = (map->next.y - map->cur.y) * (map->scale / 6) * (i + 1);
+	image->instances[0].x = (map->cur.x * map->scale) + m.x;
+	image->instances[0].y = (map->cur.y * map->scale) + m.y;
+	if (i < 5)
+		return ;
+	map->move++;
+	map->cur = map->next;
+	put_text_move(map);
+	map->p_state = 0;
+	check_cur_grid(map);
+}

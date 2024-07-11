@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path_check_bonus.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/11 16:09:04 by yzhan             #+#    #+#             */
+/*   Updated: 2024/07/11 16:09:07 by yzhan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long_bonus.h"
 
 //func to find a path
@@ -35,10 +47,10 @@ int	check_path(t_map *map)
 
 	i = 0;
 	path = 0;
-	matrix = malloc((map->rows + 1) * (sizeof(char *)));
+	matrix = malloc((map->row + 1) * (sizeof(char *)));
 	if (!matrix)
 		error_info(map, "Malloc error when check valid path.");
-	while (i < map->rows)
+	while (i < map->row)
 	{
 		matrix[i] = ft_strdup(map->grid[i]);
 		if (!matrix[i])

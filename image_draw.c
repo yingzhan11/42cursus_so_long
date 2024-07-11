@@ -6,7 +6,7 @@
 /*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 09:52:24 by yzhan             #+#    #+#             */
-/*   Updated: 2024/07/04 10:18:44 by yzhan            ###   ########.fr       */
+/*   Updated: 2024/07/11 15:24:14 by yzhan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	draw_map(mlx_t *mlx, t_map *map, t_image *image, t_point cur)
 	}
 	else if (map->grid[cur.y][cur.x] == 'e')
 		mlx_image_to_window(mlx, image->exit2, cur.x * scale, cur.y * scale);
-	
 }
 
 //draw map to window, then get the player position and put the player image

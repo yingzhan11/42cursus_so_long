@@ -43,8 +43,8 @@ void	image_initialize(mlx_t *mlx, t_map *map)
 	map->image.empty = image_load(mlx, map, "./textures/empty.png");
 	map->image.wall = image_load(mlx, map, "./textures/wall.png");
 	map->image.collect = image_load(mlx, map, "./textures/collect.png");
-	map->image.exit1 = image_load(mlx, map, "./textures/exit1.png");
-	map->image.exit2 = image_load(mlx, map, "./textures/exit2.png");
+	map->image.exit1 = image_load(mlx, map, "./textures/exit_close.png");
+	map->image.exit2 = image_load(mlx, map, "./textures/exit_open.png");
 	map->image.start = image_load(mlx, map, "./textures/start.png");
 	map->image.player = image_load(mlx, map, "./textures/player.png");
 }

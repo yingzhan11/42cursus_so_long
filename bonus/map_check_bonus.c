@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_check_bonus.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/11 16:07:17 by yzhan             #+#    #+#             */
+/*   Updated: 2024/07/11 16:08:22 by yzhan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
@@ -9,13 +20,13 @@ int	check_shape(t_map *map)
 
 	y = 0;
 	len = ft_strlen(map->grid[y]);
-	while (y < map->rows)
+	while (y < map->row)
 	{
 		if (ft_strlen(map->grid[y]) != len)
 			return (0);
 		y++;
 	}
-	map->cols = len;
+	map->col = len;
 	return (1);
 }
 
@@ -25,16 +36,16 @@ int	check_wall(t_map *map)
 	int	i;
 
 	i = 0;
-	while (i < map->cols)
+	while (i < map->col)
 	{
-		if (map->grid[0][i] != '1' || map->grid[map->rows - 1][i] != '1')
+		if (map->grid[0][i] != '1' || map->grid[map->row - 1][i] != '1')
 			return (0);
 		i++;
 	}
 	i = 0;
-	while (i < map->rows)
+	while (i < map->row)
 	{
-		if (map->grid[i][0] != '1' || map->grid[i][map->cols - 1] != '1')
+		if (map->grid[i][0] != '1' || map->grid[i][map->col - 1] != '1')
 			return (0);
 		i++;
 	}
@@ -44,13 +55,13 @@ int	check_wall(t_map *map)
 //check map elements, only '01CEP' is valid, and only one 'EPC' is valid
 int	check_elements(t_map *map)
 {
-	t_point p;
+	t_point	p;
 
 	p.y = 0;
-	while (p.y < map->rows)
+	while (p.y < map->row)
 	{
 		p.x = 0;
-		while (p.x < map->cols)
+		while (p.x < map->col)
 		{
 			if (!ft_strchr(ELEMENTS, map->grid[p.y][p.x]))
 				return (0);
@@ -71,15 +82,15 @@ int	check_elements(t_map *map)
 	return (0);
 }
 
-void get_player_position(t_map *map)
+void	get_player_position(t_map *map)
 {
-	t_point p;
+	t_point	p;
 
 	p.y = 0;
-	while (p.y < map->rows)
+	while (p.y < map->row)
 	{
 		p.x = 0;
-		while (++p.x < map->cols)
+		while (p.x < map->col)
 		{
 			if (map->grid[p.y][p.x] == 'P')
 			{
@@ -90,35 +101,33 @@ void get_player_position(t_map *map)
 		}
 		p.y++;
 	}
-
 }
 
-void get_enemy_path(t_map *map)
+void	get_enemy_path(t_map *map)
 {
-	t_point p;
-	int i;
+	t_point	p;
+	int		i;
 
 	map->enemy = malloc(map->enemy_n * sizeof(t_enemy));
 	if (!map->enemy)
 		error_info(map, "Failed to get enemy positions.");
 	p.y = -1;
 	i = 0;
-	while (++p.y < map->rows && i < map->enemy_n)
+	while (++p.y < map->row && i < map->enemy_n)
 	{
 		p.x = -1;
-		while (++p.x < map->cols)
+		while (++p.x < map->col)
 		{
 			if (map->grid[p.y][p.x] == 'H' || (map->grid[p.y][p.x] == 'V'))
 			{
 				map->enemy[i].type = map->grid[p.y][p.x];
 				map->enemy[i].pos = (t_point){p.x, p.y};
 				if (map->grid[p.y][p.x] == 'H')
-					map->enemy[i].dir = 'r';
+					map->enemy[i].dir = 'l';
 				if (map->grid[p.y][p.x] == 'V')
-					map->enemy[i].dir = 'd';
+					map->enemy[i].dir = 'u';
 				i++;
 			}
 		}
 	}
 }
-

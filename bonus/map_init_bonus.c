@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_init_bonus.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/11 16:08:33 by yzhan             #+#    #+#             */
+/*   Updated: 2024/07/11 16:08:47 by yzhan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
@@ -18,7 +29,7 @@ static void	file_check(t_map *map, char *filename)
 	close (fd);
 }
 
-//count the rows in map grid
+//count the row in map grid
 static void	count_rows(t_map *map, char *filename)
 {
 	char	*line;
@@ -32,7 +43,7 @@ static void	count_rows(t_map *map, char *filename)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		map->rows++;
+		map->row++;
 		free (line);
 	}
 	close (fd);
@@ -46,14 +57,14 @@ static void	read_map(t_map *map, char *filename)
 	int		fd;
 
 	count_rows(map, filename);
-	map->grid = malloc((map->rows + 1) * sizeof(char *));
+	map->grid = malloc((map->row + 1) * sizeof(char *));
 	if (map->grid == NULL)
 		error_info(map, "Failed to create map grid!");
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		error_info(map, "Failed to open map file!");
 	y = 0;
-	while (y < map->rows)
+	while (y < map->row)
 	{
 		line = get_next_line(fd);
 		if (!line)
@@ -74,11 +85,11 @@ void	map_initialize(t_map *map, char *filename)
 {
 	file_check(map, filename);
 	read_map(map, filename);
-	if (map->rows == 0)
+	if (map->row == 0)
 		error_info(map, "Map is empty.");
 	if (check_shape(map) == 0)
 		error_info(map, "Map is not a rectangular.");
-	if (map->rows > 120 || map->cols > 120)
+	if (map->row > 120 || map->col > 120)
 		error_info(map, "This map is too big.");
 	if (check_wall(map) == 0)
 		error_info(map, "The map is not closed by walls.");

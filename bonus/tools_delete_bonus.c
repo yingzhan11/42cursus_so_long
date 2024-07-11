@@ -1,15 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools_delete_bonus.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/11 16:50:28 by yzhan             #+#    #+#             */
+/*   Updated: 2024/07/11 16:51:00 by yzhan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
-void delete_enemy(t_map *map)
+void	delete_enemy(t_map *map)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < map->enemy_n)
 	{
-		if (map->enemy[i].image)
-			mlx_delete_image(map->mlx, map->enemy[i].image);
+		if (map->enemy[i].img)
+			mlx_delete_image(map->mlx, map->enemy[i].img);
 		i++;
 	}
 }
@@ -67,10 +78,9 @@ void	delete_map(t_map *map)
 		mlx_delete_image(map->mlx, map->player.image);
 	delete_image(map);
 	if (map->grid)
-		delete_matrix(map->grid, map->rows);
+		delete_matrix(map->grid, map->row);
 	if (map->enemy)
 		free(map->enemy);
 	if (map->mlx)
 		mlx_terminate(map->mlx);
 }
-

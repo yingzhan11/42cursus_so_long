@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/11 16:06:39 by yzhan             #+#    #+#             */
+/*   Updated: 2024/07/11 16:06:55 by yzhan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
@@ -16,21 +27,21 @@ static void	param_check(int argc)
 	}
 }
 
-//calculate the window size based on the cols and rows of map grid and init win
+//calculate the window size based on the col and row of map grid and init win
 static void	window_initialize(t_map *map)
 {
 	int	scale;
 	int	x;
 	int	y;
 
-	x = map->cols / 16;
-	y = map->rows / 16;
+	x = map->col / 16;
+	y = map->row / 16;
 	if (x >= y)
 		scale = 160 / (x + 1);
 	else
 		scale = 160 / (y + 1);
-	map->window_w = map->cols * scale;
-	map->window_h = map->rows * scale;
+	map->window_w = map->col * scale;
+	map->window_h = map->row * scale;
 	map->mlx = mlx_init(map->window_w, map->window_h, "so_long", true);
 	if (!map->mlx)
 		error_info(map, "Fail to initialize window");
@@ -49,9 +60,7 @@ int	main(int argc, char **argv)
 	mlx_key_hook(map.mlx, my_keyhook, &map);
 	mlx_resize_hook(map.mlx, my_resizehook, &map);
 	mlx_close_hook(map.mlx, my_closehook, &map);
-	
 	mlx_loop_hook(map.mlx, my_updatehook, &map);
-
 	mlx_loop(map.mlx);
 	mlx_terminate(map.mlx);
 	return (EXIT_SUCCESS);

@@ -10,6 +10,16 @@
 
 **TODO** 3-path: 有点困难，没想好，可能用穷举法，但这样太慢了，暂时没想到更高效的方法 **有问题，huge map会显示没有valid路线，但是用manda版本是有路线的，large也有，解决了，但huge仍然有这个问题，没发现是哪里的问题。
 
+// redraw the map, replace enemy by wall and empty
+
+which kind of enemy is wall, which kind can be 0
+
+enemy position and all enemy path was surroundding by 1 -> 1
+
+middle position on path, near grid(left right for V, up down for H) has at least one is 0 or C -> 0
+
+the end two grid of enemy path, only one near grid is 0 or C or E
+
 √ 4-load enemy image
 
 √ 5-时间loop， 使用double mlx_get_time(void); 获取mlx里的double	delta_time;
