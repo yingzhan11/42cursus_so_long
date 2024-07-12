@@ -2,12 +2,14 @@ NAME	= so_long
 NAMEBONUS = so_long_bonus
 CFLAGS	= -Wextra -Wall -Werror
 
-LIBFT_DIR = LIBFT
-LIBMLX_DIR = MLX42
-LIBMLX_URL = https://github.com/codam-coding-college/MLX42.git
-HEADERS = -I $(LIBMLX_DIR)/include -I $(LIBFT_DIR)
-LIBMLX_A = $(LIBMLX_DIR)/build/libmlx42.a -ldl -lglfw -pthread -lm
+LIBFT_DIR = ./LIBFT
 LIBFT_A = $(LIBFT_DIR)/libft.a
+
+LIBMLX_URL = https://github.com/codam-coding-college/MLX42.git
+LIBMLX_DIR = ./MLX42
+LIBMLX_A = $(LIBMLX_DIR)/build/libmlx42.a -ldl -lglfw -pthread -lm
+
+HEADERS = -I $(LIBMLX_DIR)/include -I $(LIBFT_DIR)
 
 SRCS	= main.c map_init.c map_check.c image_init.c image_draw.c hook.c player_move.c tools.c
 OBJS	= $(SRCS:.c=.o)
@@ -26,23 +28,19 @@ bonus: clone $(NAMEBONUS)
 clone:
 	@if [ ! -d "$(LIBMLX_DIR)" ]; then \
 		git clone $(LIBMLX_URL); \
-	else \
-		echo "$(LIBMLX_DIR) already exists."; \
 	fi
-
-libmlx:
-	@cmake $(LIBMLX_DIR) -B $(LIBMLX_DIR)/build && make -C $(LIBMLX_DIR)/build -j4
-
-libft:
-	@make -C $(LIBFT_DIR)
 
 %.o: %.c
 	@cc $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)\n"
 
-$(NAME): $(OBJS) libmlx libft
-	cc $(OBJS) $(LIBFT_A) $(LIBMLX_A) -o $@
+$(NAME): $(OBJS)
+	@cmake $(LIBMLX_DIR) -B $(LIBMLX_DIR)/build && make -C $(LIBMLX_DIR)/build -j4
+	@make -C $(LIBFT_DIR)
+	cc $(OBJS) $(LIBFT_A) $(LIBMLX_A) -o $(NAME)
 
-$(NAMEBONUS): $(BONUS_OBJS) libmlx libft
+$(NAMEBONUS): $(BONUS_OBJS)
+	@cmake $(LIBMLX_DIR) -B $(LIBMLX_DIR)/build && make -C $(LIBMLX_DIR)/build -j4
+	@make -C $(LIBFT_DIR)
 	cc $(BONUS_OBJS) $(LIBFT_A) $(LIBMLX_A) -o $(NAMEBONUS)
 
 clean:
@@ -56,4 +54,4 @@ fclean: clean
 
 re: clean all
 
-.PHONY: all, clean, fclean, re, clone, libmlx, libft, bonus
+.PHONY: all clean fclean re bonus clone
