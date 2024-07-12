@@ -12,6 +12,7 @@
 
 #include "so_long_bonus.h"
 
+//function to print string on window, and update the info
 void	put_text_move(t_map *map)
 {
 	char	*move;

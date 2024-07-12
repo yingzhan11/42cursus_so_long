@@ -12,11 +12,17 @@
 
 #include "so_long_bonus.h"
 
+/*
+helper function to calculat the color number, and
+combines the red, green, blue and alpha components into a single 32-bit integer
+format is 0xRRGGBBAA, RR is the hexadecimal of red
+*/
 static int	get_rgba(int r, int g, int b, int a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
+//get the color value at the specified (x,y) coord from image
 static uint32_t	get_pixel(mlx_image_t *image, uint32_t x, uint32_t y)
 {
 	uint8_t	*color;
@@ -27,6 +33,7 @@ static uint32_t	get_pixel(mlx_image_t *image, uint32_t x, uint32_t y)
 	return (get_rgba(*(color), *(color + 1), *(color + 2), *(color + 3)));
 }
 
+//copy specific range (c, r) from animation image to the image showed on window
 void	put_anima(mlx_image_t *img, mlx_image_t *anima, uint32_t c, uint32_t r)
 {
 	uint32_t	x;

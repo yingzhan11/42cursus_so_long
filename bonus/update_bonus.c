@@ -6,12 +6,13 @@
 /*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:52:02 by yzhan             #+#    #+#             */
-/*   Updated: 2024/07/11 16:59:59 by yzhan            ###   ########.fr       */
+/*   Updated: 2024/07/12 11:25:54 by yzhan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
+//helper function for enemy flying animation
 static void	enemy_animation(t_map *map, int col)
 {
 	int		i;
@@ -26,6 +27,7 @@ static void	enemy_animation(t_map *map, int col)
 	}
 }
 
+//update anemy animation and movement
 void	enemy_update(t_map *map, double newtime)
 {
 	static double	fly_time = 0;
@@ -49,11 +51,12 @@ void	enemy_update(t_map *map, double newtime)
 	}
 }
 
+//update player animation or movement
 void	player_update(t_map *map, double newtime)
 {
 	t_player		player;
 	static double	std_time = 0;
-	static double   run_time = 0;
+	static double	run_time = 0;
 	static int		col = 0;
 	static int		col_r = 0;
 

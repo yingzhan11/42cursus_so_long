@@ -27,7 +27,7 @@ static void	param_check(int argc)
 	}
 }
 
-//calculate the window size based on the cols and rows of map grid and init win
+//calculate the window size based on cols and rows of map grid and init window
 static void	window_initialize(t_map *map)
 {
 	int	scale;

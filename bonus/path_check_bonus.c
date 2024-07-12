@@ -37,8 +37,10 @@ static int	find_path(t_map *map, t_point cur, char **matrix)
 	return (0);
 }
 
-//func to copy a matrix of map grid used to check a valid path
-//the valid map must have at least one valid path to win
+/*
+func to copy a matrix of map grid used to check a valid path
+the valid map must have at least one valid path to win
+*/
 int	check_path(t_map *map)
 {
 	char	**matrix;

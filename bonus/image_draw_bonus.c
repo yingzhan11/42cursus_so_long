@@ -35,6 +35,12 @@ static void	draw_map(mlx_t *mlx, t_map *map, t_image *image, t_point cur)
 		mlx_image_to_window(mlx, image->exit2, cur.x * scale, cur.y * scale);
 }
 
+/*
+draw each enemy image
+in the enamy animation file, row0 is face to right, row1 is face to left,
+and row2, row3 is face to down and up
+default col is 0
+*/
 static void	draw_enemy(mlx_t *mlx, t_map *map, t_image *image, t_enemy *enemy)
 {
 	int	i;

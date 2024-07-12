@@ -12,6 +12,10 @@
 
 #include "so_long_bonus.h"
 
+/*
+helper function to get the next position of player and 
+move to corresponding row in animation image
+*/
 static void	update_player_dir(t_map *map, char dir)
 {
 	if (dir == 'W')
@@ -85,6 +89,7 @@ void	my_closehook(void *param)
 	exit(EXIT_SUCCESS);
 }
 
+//hook for update animation based on time
 void	my_updatehook(void *param)
 {
 	t_map	*map;

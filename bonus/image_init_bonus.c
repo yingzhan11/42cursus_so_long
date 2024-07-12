@@ -36,6 +36,10 @@ static mlx_image_t	*image_load(mlx_t *mlx, t_map *map, const char *path)
 	return (image);
 }
 
+/*
+load animation image
+col and row is the count of single image for each line in the image file
+*/
 static	mlx_image_t	*ani_load(t_map *map, const char *path, int col, int row)
 {	
 	mlx_texture_t	*texture;

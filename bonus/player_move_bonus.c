@@ -25,9 +25,11 @@ static int	check_grid_next(t_map *map)
 	return (1);
 }
 
-/*when current position is collect, count it and change the image to empty.
-chenk the num of collect, if already get all collections,
-show info and change the image of exit*/
+/*
+when current position is collect, count it and change the image to disabled.
+chenk the num of collect, if already get all collections, show info and 
+change the image and mark of exit
+*/
 static void	get_collect(t_map *map, t_image *image)
 {
 	size_t	i;
@@ -56,6 +58,10 @@ static void	get_collect(t_map *map, t_image *image)
 	put_text_info(map, map->info);
 }
 
+/*
+check player current position
+check collections, exit and enemy
+*/
 static void	check_cur_grid(t_map *map)
 {
 	if (map->grid[map->cur.y][map->cur.x] == 'C')
@@ -72,9 +78,12 @@ static void	check_cur_grid(t_map *map)
 		quit_game(map, "GAME OVER! 〒▽〒");
 }
 
-/*func to move player and check collet and exit
-check next, if wall or not
-then change the current coord and check collect num and exit*/
+/*
+func to move player
+check next position, if it is wall, do not move to
+if no, move to next grid and change the current coord, update move text
+and check cur position elements
+*/
 void	player_move(t_map *map, mlx_image_t *image, int i)
 {
 	t_point	m;

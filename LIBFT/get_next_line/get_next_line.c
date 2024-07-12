@@ -6,7 +6,7 @@
 /*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 11:16:26 by yzhan             #+#    #+#             */
-/*   Updated: 2024/06/05 14:54:41 by yzhan            ###   ########.fr       */
+/*   Updated: 2024/07/12 11:26:43 by yzhan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static char	*ft_read_buf(int fd, char *read_buf)
 	tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!tmp)
 		return (ft_free(&read_buf));
-	while (!read_buf || (read_buf && chars > 0 && !ft_gnl_strchr(read_buf, '\n')))
+	while (!read_buf
+		|| (read_buf && chars > 0 && !ft_gnl_strchr(read_buf, '\n')))
 	{
 		chars = read(fd, tmp, BUFFER_SIZE);
 		if (chars < 0)

@@ -82,6 +82,7 @@ int	check_elements(t_map *map)
 	return (0);
 }
 
+//check player's start position
 void	get_player_position(t_map *map)
 {
 	t_point	p;
@@ -103,15 +104,15 @@ void	get_player_position(t_map *map)
 	}
 }
 
+/*
+check enemys start position and directions
+'H' enemy default dir is left, and 'V' enemy default dir is up
+*/
 void	get_enemy_path(t_map *map)
 {
 	t_point	p;
 	int		i;
 
-	/*map->enemy = malloc(map->enemy_n * sizeof(t_enemy));
-	if (!map->enemy)
-		error_info(map, "Failed to get enemy positions.");
-*/
 	p.y = -1;
 	i = 0;
 	while (++p.y < map->row && i < map->enemy_n)

@@ -6,7 +6,7 @@
 /*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:08:33 by yzhan             #+#    #+#             */
-/*   Updated: 2024/07/11 16:08:47 by yzhan            ###   ########.fr       */
+/*   Updated: 2024/07/12 11:26:18 by yzhan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,10 @@ static void	read_map(t_map *map, char *filename)
 	close(fd);
 }
 
-static void init_enemy(t_map *map)
+//initialize the (t_enemy *)map->enemy
+static void	init_enemy(t_map *map)
 {
-	int i;
+	int	i;
 
 	map->enemy = malloc(map->enemy_n * sizeof(t_enemy));
 	if (!map->enemy)
@@ -93,9 +94,11 @@ static void init_enemy(t_map *map)
 	}
 }
 
-/*read the map file and check if the map is valid or not
-check map elements '01CEP', the shape and size of map
-the boundary and the path*/
+/*
+read the map file and check if the map is valid or not
+check map elements '01CEP', the shape and size of map,
+the boundary and the path
+*/
 void	map_initialize(t_map *map, char *filename)
 {
 	file_check(map, filename);

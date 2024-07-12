@@ -78,9 +78,11 @@ static void	read_map(t_map *map, char *filename)
 	close(fd);
 }
 
-/*read the map file and check if the map is valid or not
-check map elements '01CEP', the shape and size of map
-the boundary and the path*/
+/*
+read the map file and check if the map is valid or not.
+check map elements '01CEP', the shape and size of map,
+the boundary and the path
+*/
 void	map_initialize(t_map *map, char *filename)
 {
 	file_check(map, filename);

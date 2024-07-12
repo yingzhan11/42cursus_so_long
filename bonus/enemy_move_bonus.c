@@ -116,6 +116,7 @@ static void	enemy_go_up(t_map *map, int i)
 		quit_game(map, "GAME OVER!");
 }
 
+//enemy move contorl
 void	enemy_move(t_map *map)
 {
 	int	i;

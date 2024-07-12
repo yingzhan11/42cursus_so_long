@@ -23,9 +23,11 @@ static int	check_grid_next(t_map *map)
 	return (1);
 }
 
-/*when current position is collect, count it and change the image to empty.
+/*
+when current position is collect, count it and change the image to empty.
 chenk the num of collect, if already get all collections,
-show info and change the image of exit*/
+show info and change the image of exit
+*/
 static void	get_collect(t_map *map, t_image *image)
 {
 	size_t	i;
@@ -53,9 +55,11 @@ static void	get_collect(t_map *map, t_image *image)
 		ft_printf("Found Fries: %d/%d\n", map->collect_get, map->collect_all);
 }
 
-/*func to move player and check collet and exit
+/*
+func to move player and check collet and exit
 check next, if wall or not
-then change the current coord and check collect num and exit*/
+then change the current coord and check collect num and exit
+*/
 void	player_move(t_map *map, t_image *image)
 {
 	int	collect;
