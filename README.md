@@ -52,7 +52,7 @@ _**player animation**_
 
 **TODO** 2-文字大小根据窗口大小变化，可以用mlx_resize_image()函数，但目前窗口太小时，不起作用，是尺寸传值有问题，待解决
 
-**TODO** 1-memroy check. 
+√ 1-memroy check. 
 
 ## Future
 
