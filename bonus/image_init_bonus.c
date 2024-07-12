@@ -69,7 +69,10 @@ void	image_initialize(mlx_t *mlx, t_map *map)
 	map->image.text_info = NULL;
 	map->player.image = mlx_new_image(mlx, map->scale, map->scale);
 	map->image.enemy_fly = ani_load(map, "./textures/enemy.png", 4, 4);
-	i = -1;
-	while (++i < map->enemy_n)
+	i = 0;
+	while (i < map->enemy_n)
+	{
 		map->enemy[i].img = mlx_new_image(mlx, map->scale, map->scale);
+		i++;
+	}
 }

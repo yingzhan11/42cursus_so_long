@@ -78,6 +78,21 @@ static void	read_map(t_map *map, char *filename)
 	close(fd);
 }
 
+static void init_enemy(t_map *map)
+{
+	int i;
+
+	map->enemy = malloc(map->enemy_n * sizeof(t_enemy));
+	if (!map->enemy)
+		error_info(map, "Failed to malloc t_enemy");
+	i = 0;
+	while (i < map->enemy_n)
+	{
+		ft_bzero(&map->enemy[i], sizeof(t_enemy));
+		i++;
+	}
+}
+
 /*read the map file and check if the map is valid or not
 check map elements '01CEP', the shape and size of map
 the boundary and the path*/
@@ -96,6 +111,7 @@ void	map_initialize(t_map *map, char *filename)
 	if (check_elements(map) == 0)
 		error_info(map, "Elements of map is invalid.");
 	get_player_position(map);
+	init_enemy(map);
 	get_enemy_path(map);
 	map->cur = (t_point){map->start.x, map->start.y};
 	if (check_path(map) == 0)

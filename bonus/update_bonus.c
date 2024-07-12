@@ -28,51 +28,51 @@ static void	enemy_animation(t_map *map, int col)
 
 void	enemy_update(t_map *map, double newtime)
 {
-	static double	time = 0;
+	static double	fly_time = 0;
+	static double	move_time = 0;
 	static int		col = 0;
-	static double	flytime = 0;
 
-	flytime += newtime;
+	fly_time += newtime;
 	if (col >= 4)
 		col = 0;
-	if (flytime > 0.25)
+	if (fly_time > 0.25)
 	{
 		enemy_animation(map, col);
 		col++;
-		flytime -= 0.25;
+		fly_time -= 0.25;
 	}
-	time += newtime;
-	if (time > 1)
+	move_time += newtime;
+	if (move_time > ENEMY_SPEED)
 	{
 		enemy_move(map);
-		time -= 1;
+		move_time -= ENEMY_SPEED;
 	}
 }
 
 void	player_update(t_map *map, double newtime)
 {
-	static int		col = 0;
-	static int		cols_r = 0;
-	static double	flytime = 0;
 	t_player		player;
+	static double	std_time = 0;
+	static double   run_time = 0;
+	static int		col = 0;
+	static int		col_r = 0;
 
-	flytime += newtime;
+	std_time += newtime;
 	player = map->player;
-	if (flytime > 0.25 && map->p_state == 0)
+	if (std_time > 0.25 && map->p_state == 0)
 	{
 		if (col >= 4)
 			col = 0;
-		put_anima(player.image, map->image.player_std, col, player.row);
-		col++;
-		flytime -= 0.25;
+		put_anima(player.image, map->image.player_std, col++, player.row);
+		std_time -= 0.25;
 	}
-	if (map->p_state == 1 && flytime > 0.05)
+	run_time += newtime;
+	if (map->p_state == 1 && run_time > PLAYER_SPEED)
 	{
-		if (cols_r >= 6)
-			cols_r = 0;
-		player_move(map, player.image, cols_r);
-		put_anima(player.image, map->image.player_run, cols_r, player.row);
-		cols_r++;
-		flytime -= 0.05;
+		if (col_r >= 6)
+			col_r = 0;
+		player_move(map, player.image, col_r);
+		put_anima(player.image, map->image.player_run, col_r++, player.row);
+		run_time -= PLAYER_SPEED;
 	}
 }

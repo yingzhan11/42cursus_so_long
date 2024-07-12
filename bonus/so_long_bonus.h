@@ -24,6 +24,8 @@
 
 # define ELEMENTS "01PECHV"
 # define MOVEKEY "WASD"
+# define PLAYER_SPEED 0.05
+# define ENEMY_SPEED 1
 
 typedef struct s_point
 {

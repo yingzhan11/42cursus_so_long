@@ -108,9 +108,10 @@ void	get_enemy_path(t_map *map)
 	t_point	p;
 	int		i;
 
-	map->enemy = malloc(map->enemy_n * sizeof(t_enemy));
+	/*map->enemy = malloc(map->enemy_n * sizeof(t_enemy));
 	if (!map->enemy)
 		error_info(map, "Failed to get enemy positions.");
+*/
 	p.y = -1;
 	i = 0;
 	while (++p.y < map->row && i < map->enemy_n)

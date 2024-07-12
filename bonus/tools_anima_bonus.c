@@ -21,7 +21,7 @@ static uint32_t	get_pixel(mlx_image_t *image, uint32_t x, uint32_t y)
 {
 	uint8_t	*color;
 
-	if (x > image->width || y > image->height)
+	if (x >= image->width || y >= image->height)
 		return (0xFF000000);
 	color = image->pixels + (y * image->width + x) * sizeof(int32_t);
 	return (get_rgba(*(color), *(color + 1), *(color + 2), *(color + 3)));
@@ -32,21 +32,21 @@ void	put_anima(mlx_image_t *img, mlx_image_t *anima, uint32_t c, uint32_t r)
 	uint32_t	x;
 	uint32_t	y;
 	uint32_t	newpixel;
-	uint32_t	col;
-	uint32_t	row;
+	uint32_t	width;
+	uint32_t	height;
 
-	row = 0;
-	while (row < img->height)
+	height = 0;
+	while (height < img->height)
 	{
-		col = 0;
-		while (col < img->width)
+		width = 0;
+		while (width < img->width)
 		{
-			x = c * img->width + col;
-			y = r * img->height + row;
+			x = c * img->width + width;
+			y = r * img->height + height;
 			newpixel = get_pixel(anima, x, y);
-			mlx_put_pixel(img, col, row, newpixel);
-			col++;
+			mlx_put_pixel(img, width, height, newpixel);
+			width++;
 		}
-		row++;
+		height++;
 	}
 }
