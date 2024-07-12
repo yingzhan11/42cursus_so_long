@@ -1,4 +1,4 @@
-计划：
+
 
 # Bonus
 
@@ -8,17 +8,11 @@
 
 √ 2-检查敌人密度check denisty: (number of enemy * 100) / (empty + collect + 2)
 
-**TODO** 3-path: 有点困难，没想好，可能用穷举法，但这样太慢了，暂时没想到更高效的方法 **有问题，huge map会显示没有valid路线，但是用manda版本是有路线的，large也有，解决了，但huge仍然有这个问题，没发现是哪里的问题。
+**TODO** 3-path: 有点困难，没想好，可能用穷举法，但这样太慢了，暂时没想到更高效的方法 
 
-// redraw the map, replace enemy by wall and empty
+// map check is impossible for my bonus. and my enemy has its path and speed. in some case, if we check all possible positions for enemys, it would show there is a valid path to win. but if the enemy speed is much faster than player, player cannot pass and get collections without touch enemys. so it may need a program to check path , not a simple function.
 
-which kind of enemy is wall, which kind can be 0
-
-enemy position and all enemy path was surroundding by 1 -> 1
-
-middle position on path, near grid(left right for V, up down for H) has at least one is 0 or C -> 0
-
-the end two grid of enemy path, only one near grid is 0 or C or E
+//and I want to add player attch function at beginning, so that player can kill all enemy, there is no need to consider enemy path when check map. although I don't have time to do the attch func this time. in the furture plan maybe.
 
 √ 4-load enemy image
 
@@ -50,7 +44,7 @@ _**player animation**_
 
 √ 1-显示步数
 
-**TODO** 2-文字大小根据窗口大小变化，可以用mlx_resize_image()函数，但目前窗口太小时，不起作用，是尺寸传值有问题，待解决
+**TODO** 2-文字大小根据窗口大小变化，可以用mlx_resize_image()函数，但目前窗口太小时，不起作用，是尺寸传值有问题，待解决, not this time.
 
 √ 1-memroy check. 
 
