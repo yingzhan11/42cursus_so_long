@@ -1,5 +1,3 @@
-FINISH 125/100
-
 # About this project
 
 It is a small 2D game.
