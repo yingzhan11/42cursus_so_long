@@ -1,4 +1,34 @@
+FINISH 125/100
 
+# About this project
+
+It is a small 2D game.
+
+In the mandatory part, the player need to collect all fries then go to the exit door. 
+
+In the bonus part, there are many enemys, the hungry seagull! If the player encounter the seagull, GAME OVER!
+
+# How to play
+
+1-git clone my program. The MLX42 library clone is including inside the Makefile, so you can just ```make``` the program. ```make``` for mandatory part, and ```make bonus``` for bonus part. If you make the mandatory first, when you want to try bonus game, ```make fclean``` to clear all mandatory files, then ```make bonus```, caz I use write some functions in same names, there might be some conflict if mandatory and bonus both exist.
+
+2-contorl player with WASD
+
+3-collect all delicious fries and avoid seagull. Enjoy!
+
+# Some tips to this project
+
+1-The mandatory part is easy, I spend about 2.5 weeks to do it. The bonus part would be a little difficult on managing animation and checking the enemy path. Print string inside window is easy. The bonus part tooks me 1.5 weeks. So if you are very interested in how to make a animation, try it, it's interesting. If not, DONOT think about bonus.
+
+2-Read the .h file of MLX42 library carefully, there are a lot of values and functions you can use directly in your code. And try the code provide in MLX42 README.d. It would save time when you start coding. And whenever you want to add some new functions or use some values, back to and search in MLX42, you might find that you don't have to write it by yourself.
+
+3-Remember to be careful with malloc and memmory leak.
+
+4-In the mandatory part, clip your texture files into single pieces and load they seperately into image would be eaiser (and put pixel is not allowed in mandatory part in the evaluation instruction). But in bonus animation, load the full aninmation frames texture would be better, more efficient and easy to be managed.
+
+5-When you check the valid path of map, try the floodfill agorithm(Level4 of exam rank02)
+
+# Mandatory
 
 # Bonus
 
