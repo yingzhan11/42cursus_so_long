@@ -16,11 +16,12 @@ In the bonus part, there are many enemys, the hungry seagull! If the player enco
 
 ## Mandatory part
 
-[Screencast from 08-02-2024 01:54:08 PM.webm](https://github.com/user-attachments/assets/a69d0676-42e3-492c-8f77-da85a769034a)
+[so_long_mandatory.webm](https://github.com/user-attachments/assets/49360429-25c0-4891-8a2e-420d493b5479)
+
 
 ## Bonus part
 
-[Screencast from 08-02-2024 01:56:31 PM.webm](https://github.com/user-attachments/assets/4ca97a81-d025-4449-907f-71f57edf56e7)
+[so_long_bonus.webm](https://github.com/user-attachments/assets/409e6195-0b8a-4aad-bcc7-7de2e2a5594b)
 
 # Some tips to this project
 
