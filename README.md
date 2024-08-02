@@ -10,9 +10,7 @@ In the bonus part, there are many enemys, the hungry seagull! If the player enco
 
 1-git clone my program. The MLX42 library clone is including inside the Makefile, so you can just ```make``` the program. ```make``` for mandatory part, and ```make bonus``` for bonus part. If you make the mandatory first, when you want to try bonus game, ```make fclean``` to clear all mandatory files, then ```make bonus```, caz I use write some functions in same names, there might be some conflict if mandatory and bonus both exist.
 
-2-contorl player with WASD
-
-3-collect all delicious fries and avoid seagull. Enjoy!
+2-contorl player with WASD, collect all delicious fries and avoid seagull.
 
 # Some tips to this project
 
@@ -26,58 +24,30 @@ In the bonus part, there are many enemys, the hungry seagull! If the player enco
 
 5-When you check the valid path of map, try the floodfill agorithm(Level4 of exam rank02)
 
-# Mandatory
-
 # Bonus
 
-## Make the player lose when they touch an enemy patrol.
+**1-## Make the player lose when they touch an enemy patrol.**
 
-√ 1-获取敌人数量，敌人起始位置，敌人类型（V & H）， 敌人方向（d & l）：V方向敌人默认先向下走，H方向的敌人默认先向右走
+The bonus part still has some small problem about how to check valid path, which not matter too much for playing.
 
-√ 2-检查敌人密度check denisty: (number of enemy * 100) / (empty + collect + 2)
+As I set two kinds of enemy, one is marked as "V", which moves along vertical path, another one is "H", moves along horizontal path. And you can set the enemy speed in .h file.
 
-**TODO** 3-path: 有点困难，没想好，可能用穷举法，但这样太慢了，暂时没想到更高效的方法 
+SO, if I check all possible positions for each enemy to find a valid path (the way same as the mandatory part), sometimes it may show there is a valid path to win. But in some case like, the enemy speed is much faster than player, player cannot pass the narrow place, get collections and go back to safe place without touch any enemys.
 
-// map check is impossible for my bonus. and my enemy has its path and speed. in some case, if we check all possible positions for enemys, it would show there is a valid path to win. but if the enemy speed is much faster than player, player cannot pass and get collections without touch enemys. so it may need a program to check path , not a simple function.
+If I consider the enemy speed and player speed in the valid path checker, it not a simple function can achieve. And in my initial plan, I want to make player attack function to kill the enemy. If I did that, there is no need to consider enemy position when check valid path.
 
-//and I want to add player attch function at beginning, so that player can kill all enemy, there is no need to consider enemy path when check map. although I don't have time to do the attch func this time. in the furture plan maybe.
+**2-Add some sprite animation.**
 
-√ 4-load enemy image
+Everytime the enemy move, the map grid need to be changed at the same time. So I set the enemy movement like a jump to the next cell of grid each time, not move from now cell to next cell(like player). 
 
-√ 5-时间loop， 使用double mlx_get_time(void); 获取mlx里的double	delta_time;
+**3-Display the movement count directly on screen instead of writing it in the shell.**
 
-√ 6-敌人移动，，当敌人遇到墙1或者可收集物C，改变方向。
+In MLX42, string is convert to a image then display on window. That means we can resize the string with ```mlx_resize_image()``` function.
 
-√ 7-敌人遇到玩家时，退出游戏。敌人移动之后检测当前位置坐标是否与玩家当前坐标一样
+I tried to resize the text, but meet some problem, like, when the window is too small, my resize func cannot change the text size, text would be the default size. I know the bug may at the calculation of text size. It needs too much time to fix it to prefect. So I give it up for now, maybe do it in the furture.
 
-## Add some sprite animation.
+# Future Plan (if I want to optimize this game oneday)
 
-_**enemy animation**_
+1-Player can attack and kill the enemy.
 
-√ 1-add enemy animation, fly as time changes. cannt change dir now
-
-√ 2-改变敌人方向，change dircetion. put enemy image in t_enemy, for each enemy. the full image for all animation in t_image. when enemy change dir, put_pixel from full enemy image in t_image.
-
-_**player animation**_
-
-√ 1-玩家站立动画
-
-√ 2-玩家移动动画，从此处移动到下一格，位置变化+跑步动画
-
-√ 3-玩家方向控制
-
-**TODO** 4-代码整理+优化
-
-## Display the movement count directly on screen instead of writing it in the shell.
-
-√ 1-显示步数
-
-**TODO** 2-文字大小根据窗口大小变化，可以用mlx_resize_image()函数，但目前窗口太小时，不起作用，是尺寸传值有问题，待解决, not this time.
-
-√ 1-memroy check. 
-
-## Future
-
-1-在文字下面增加文本框image，已做 √，**TODO** 但尺寸调整需要完善，可能会考虑去掉这个功能，以后再做
-
-2-玩家攻击 attach
+2-Resize text according to the size of window.
