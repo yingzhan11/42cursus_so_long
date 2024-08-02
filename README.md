@@ -24,9 +24,9 @@ In the bonus part, there are many enemys, the hungry seagull! If the player enco
 
 5-When you check the valid path of map, try the floodfill agorithm(Level4 of exam rank02)
 
-# Bonus
+#Problems in my bonus part
 
-**1-## Make the player lose when they touch an enemy patrol.**
+**1-Make the player lose when they touch an enemy patrol.**
 
 The bonus part still has some small problem about how to check valid path, which not matter too much for playing.
 
