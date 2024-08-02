@@ -12,6 +12,16 @@ In the bonus part, there are many enemys, the hungry seagull! If the player enco
 
 2-contorl player with WASD, collect all delicious fries and avoid seagull.
 
+# Demo
+
+## Mandatory part
+
+[Screencast from 08-02-2024 01:54:08 PM.webm](https://github.com/user-attachments/assets/a69d0676-42e3-492c-8f77-da85a769034a)
+
+## Bonus part
+
+[Screencast from 08-02-2024 01:56:31 PM.webm](https://github.com/user-attachments/assets/4ca97a81-d025-4449-907f-71f57edf56e7)
+
 # Some tips to this project
 
 1-The mandatory part is easy, I spend about 2.5 weeks to do it. The bonus part would be a little difficult on managing animation and checking the enemy path. Print string inside window is easy. The bonus part tooks me 1.5 weeks. So if you are very interested in how to make a animation, try it, it's interesting. If not, DONOT think about bonus.
@@ -24,7 +34,7 @@ In the bonus part, there are many enemys, the hungry seagull! If the player enco
 
 5-When you check the valid path of map, try the floodfill agorithm(Level4 of exam rank02)
 
-#Problems in my bonus part
+# Problems in my bonus part
 
 **1-Make the player lose when they touch an enemy patrol.**
 
@@ -33,6 +43,7 @@ The bonus part still has some small problem about how to check valid path, which
 As I set two kinds of enemy, one is marked as "V", which moves along vertical path, another one is "H", moves along horizontal path. And you can set the enemy speed in .h file.
 
 SO, if I check all possible positions for each enemy to find a valid path (the way same as the mandatory part), sometimes it may show there is a valid path to win. But in some case like, the enemy speed is much faster than player, player cannot pass the narrow place, get collections and go back to safe place without touch any enemys.
+
 
 If I consider the enemy speed and player speed in the valid path checker, it not a simple function can achieve. And in my initial plan, I want to make player attack function to kill the enemy. If I did that, there is no need to consider enemy position when check valid path.
 
